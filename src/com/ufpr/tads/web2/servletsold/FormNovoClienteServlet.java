@@ -1,4 +1,4 @@
-package com.ufpr.tads.web2.servlets;
+package com.ufpr.tads.web2.servletsold;
 
 import java.io.IOException;
 
@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ufpr.tads.web2.beans.Cliente;
-import com.ufpr.tads.web2.dao.ClienteDAO;
 
-@WebServlet("/RemoverClienteServlet")
-public class RemoverClienteServlet extends HttpServlet {
+
+@WebServlet("/FormNovoClienteServlet")
+public class FormNovoClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ClienteDAO clienteDAO = new ClienteDAO();
-
-    public RemoverClienteServlet() {
+       
+    public FormNovoClienteServlet() {
         super();
     }
 
@@ -33,16 +32,14 @@ public class RemoverClienteServlet extends HttpServlet {
 	        } catch (ServletException | IOException e) {
      			e.printStackTrace();
      		}
-		} else {	
-			int id = Integer.parseInt(request.getParameter("id"));
-			clienteDAO.removerCliente(id);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+		} else {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesNovo.jsp");
 			try {
 				rd.forward(request,response);
 	        } catch (ServletException | IOException e) {
      			e.printStackTrace();
      		}
-		}
+		}		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

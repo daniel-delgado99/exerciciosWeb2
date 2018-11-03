@@ -1,7 +1,6 @@
-package com.ufpr.tads.web2.servlets;
+package com.ufpr.tads.web2.servletsold;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,16 +13,20 @@ import javax.servlet.http.HttpSession;
 import com.ufpr.tads.web2.beans.Cliente;
 import com.ufpr.tads.web2.dao.ClienteDAO;
 
-@WebServlet("/VisualizarClienteServlet")
-public class VisualizarClienteServlet extends HttpServlet {
+@WebServlet("/AlterarClienteServlet")
+public class AlterarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ClienteDAO clienteDAO = new ClienteDAO();
-       
-    public VisualizarClienteServlet() {
+
+    public AlterarClienteServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("username") == null) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
@@ -35,20 +38,27 @@ public class VisualizarClienteServlet extends HttpServlet {
      			e.printStackTrace();
      		}
 		} else {
-			int id = Integer.parseInt(request.getParameter("id"));
-			Cliente c = clienteDAO.buscarClientePorId(id);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesVisualizar.jsp");
-			try {
-	        	request.setAttribute("cliente", c);
-				rd.forward(request,response);
+			Cliente c = new Cliente();
+			c.setId(Integer.parseInt(request.getParameter("id")));
+			c.setCpf(request.getParameter("cpf"));
+			c.setNome(request.getParameter("nome"));
+			c.setEmail(request.getParameter("email"));
+			c.setData(request.getParameter("data"));
+			c.setRua(request.getParameter("rua"));
+			c.setNr( Integer.parseInt(request.getParameter("nr")));
+			c.setCep(request.getParameter("cep"));
+			c.setCidade(request.getParameter("cidade"));
+			c.setUf(request.getParameter("uf"));
+			
+			clienteDAO.alterarCliente(c);
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ClientesServlet");
+	        try {
+				dispatcher.forward(request,response);
 	        } catch (ServletException | IOException e) {
      			e.printStackTrace();
      		}
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

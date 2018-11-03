@@ -1,4 +1,4 @@
-package com.ufpr.tads.web2.servlets;
+package com.ufpr.tads.web2.servletsold;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;

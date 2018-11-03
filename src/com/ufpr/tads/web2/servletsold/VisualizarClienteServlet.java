@@ -1,6 +1,7 @@
-package com.ufpr.tads.web2.servlets;
+package com.ufpr.tads.web2.servletsold;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ufpr.tads.web2.beans.Cliente;
+import com.ufpr.tads.web2.dao.ClienteDAO;
 
-
-@WebServlet("/FormNovoClienteServlet")
-public class FormNovoClienteServlet extends HttpServlet {
+@WebServlet("/VisualizarClienteServlet")
+public class VisualizarClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ClienteDAO clienteDAO = new ClienteDAO();
        
-    public FormNovoClienteServlet() {
+    public VisualizarClienteServlet() {
         super();
     }
 
@@ -33,13 +35,16 @@ public class FormNovoClienteServlet extends HttpServlet {
      			e.printStackTrace();
      		}
 		} else {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesNovo.jsp");
+			int id = Integer.parseInt(request.getParameter("id"));
+			Cliente c = clienteDAO.buscarClientePorId(id);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesVisualizar.jsp");
 			try {
+	        	request.setAttribute("cliente", c);
 				rd.forward(request,response);
 	        } catch (ServletException | IOException e) {
      			e.printStackTrace();
      		}
-		}		
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

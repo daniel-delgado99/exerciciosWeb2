@@ -1,4 +1,4 @@
-package com.ufpr.tads.web2.servlets;
+package com.ufpr.tads.web2.servletsold;
 
 import java.io.IOException;
 
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpSession;
 import com.ufpr.tads.web2.beans.Cliente;
 import com.ufpr.tads.web2.dao.ClienteDAO;
 
-@WebServlet("/FormAlterarClienteServlet")
-public class FormAlterarClienteServlet extends HttpServlet {
+@WebServlet("/RemoverClienteServlet")
+public class RemoverClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ClienteDAO clienteDAO = new ClienteDAO();
-       
-    public FormAlterarClienteServlet() {
+
+    public RemoverClienteServlet() {
         super();
     }
 
@@ -34,11 +34,10 @@ public class FormAlterarClienteServlet extends HttpServlet {
      			e.printStackTrace();
      		}
 		} else {	
-			int id = Integer.parseInt(request.getParameter("id"));	
-			Cliente c = clienteDAO.buscarClientePorId(id);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesAlterar.jsp");
+			int id = Integer.parseInt(request.getParameter("id"));
+			clienteDAO.removerCliente(id);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
 			try {
-	        	request.setAttribute("cliente", c);
 				rd.forward(request,response);
 	        } catch (ServletException | IOException e) {
      			e.printStackTrace();
