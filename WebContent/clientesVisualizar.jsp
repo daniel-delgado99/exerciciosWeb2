@@ -47,11 +47,17 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">						
-							Cidade <input type="text" name="cidade" class="form-control" value="${cliente.cidade}" disabled/>
-						</div>
 						<div class="col-md-6">
-							UF <input type="text" name="uf" maxlength="2" class="form-control" value="${cliente.uf}" disabled/>
+							Estado
+							<select id="estado" name="estado" disabled class="form-control">
+								<option selected>${cliente.cidade.estado.nome}</option>
+							</select>
+						</div>
+						<div class="col-md-6">						
+							Cidade
+							<select id="cidade" name="cidade"  disabled class="form-control">
+								<option selected>${cliente.cidade.nome}</option>
+							</select>
 						</div>
 					</div>
 					<div class="row">

@@ -15,7 +15,9 @@ public class ClienteDAO {
 	public static void insertCliente(Cliente c) {
 		PreparedStatement pst;
 		try {
-			pst = con.prepareStatement("INSERT INTO tb_cliente(cpf_cliente, nome_cliente, email_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, cidade_cliente, uf_cliente) values (?,?,?,?,?,?,?,?,?)");
+			pst = con.prepareStatement("INSERT INTO tb_cliente"
+					+ "(cpf_cliente, nome_cliente, email_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, id_cidade) "
+					+ "values (?,?,?,?,?,?,?,?)");
 			pst.setString(1, c.getCpf());
 			pst.setString(2, c.getNome());
 			pst.setString(3, c.getEmail());
@@ -23,8 +25,7 @@ public class ClienteDAO {
 			pst.setString(5, c.getRua());
 			pst.setInt(6, c.getNr());
 			pst.setString(7, c.getCep());
-			pst.setString(8, c.getCidade());
-			pst.setString(9, c.getUf());
+			pst.setInt(8, c.getCidade().getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,8 +48,7 @@ public class ClienteDAO {
 				c.setRua(rs.getString("rua_cliente"));
 				c.setNr(rs.getInt("nr_cliente"));
 				c.setCep(rs.getString("cep_cliente"));
-				c.setUf(rs.getString("uf_cliente"));
-				c.setCidade(rs.getString("cidade_cliente"));
+				c.setCidade(CidadeDAO.buscarCidadePorId(rs.getInt("id_cidade")));
 				
 				clientes.add(c);
 			}
@@ -77,8 +77,7 @@ public class ClienteDAO {
 				c.setRua(rs.getString("rua_cliente"));
 				c.setNr(rs.getInt("nr_cliente"));
 				c.setCep(rs.getString("cep_cliente"));
-				c.setUf(rs.getString("uf_cliente"));
-				c.setCidade(rs.getString("cidade_cliente"));
+				c.setCidade(CidadeDAO.buscarCidadePorId(rs.getInt("id_cidade")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,8 +96,7 @@ public class ClienteDAO {
 					+ "rua_cliente = ?, "
 					+ "nr_cliente = ?, "
 					+ "cep_cliente = ?, "
-					+ " cidade_cliente = ?, "
-					+ "uf_cliente = ?"
+					+ "id_cidade = ? "
 					+ "WHERE id_cliente = ?;");
 			pst.setString(1, c.getCpf());
 			pst.setString(2, c.getNome());
@@ -107,9 +105,8 @@ public class ClienteDAO {
 			pst.setString(5, c.getRua());
 			pst.setInt(6, c.getNr());
 			pst.setString(7, c.getCep());
-			pst.setString(8, c.getCidade());
-			pst.setString(9, c.getUf());
-			pst.setInt(10, c.getId());
+			pst.setInt(8, c.getCidade().getId());
+			pst.setInt(9, c.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

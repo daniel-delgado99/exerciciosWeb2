@@ -9,11 +9,9 @@ public class Cliente {
 	private String rua;
 	private int nr;
 	private String cep;
-	private String cidade;
-	private String uf;
+	private Cidade cidade;
 
 	public Cliente() {
-		super();
 	}
 	
 	public int getId() {
@@ -80,21 +78,12 @@ public class Cliente {
 		this.cep = cep;
 	}
 
-	public String getCidade() {
+	public Cidade getCidade() {
 		return cidade;
 	}
 
-	public void setCidade(String cidade) {
+	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-	
 	
 }

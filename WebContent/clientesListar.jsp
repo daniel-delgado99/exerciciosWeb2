@@ -40,11 +40,11 @@
 						<tr>
 							<td>${cliente.cpf}</td>
 							<td>${cliente.nome}</td>
-							<td>${cliente.email }</td>
+							<td>${cliente.email}</td>
 							<td>
 								<a class="btn btn-success" href='${pageContext.request.contextPath}/ClientesServlet?action=show&id=${cliente.id}'><i class="far fa-eye"></i></a>
 								<a class="btn btn-warning" href='${pageContext.request.contextPath}/ClientesServlet?action=formUpdate&id=${cliente.id}'><i class="far fa-edit"></i></a>
-								<a class="btn btn-danger" href='${pageContext.request.contextPath}/ClientesServlet?action=remove&id=${cliente.id}'><i class="far fa-trash-alt"></i></a>
+								<a class="btn btn-danger" href='${pageContext.request.contextPath}/ClientesServlet?action=remove&id=${cliente.id}' onclick="return confirm('Deseja realmente excluir esse usuário?');"><i class="far fa-trash-alt"></i></a>
 							</td>
 						</tr>
 					</c:forEach>

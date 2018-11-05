@@ -18,7 +18,7 @@
 								${pageContext.exception.printStackTrace(pageContext.response.writer)}
 				</p> -->
 				<div>
-					<a class="btn btn-primary" href='${pageContext.request.contextPath}/<%= session.getAttribute("page") %>'>Inicio</a>
+					<a class="btn btn-primary" href='${pageContext.request.contextPath}/portal.jsp'>Inicio</a>
 				</div>
 				<div class="footer">
 					<p>Em caso de problemas, contatar o adminstrador.</p>
