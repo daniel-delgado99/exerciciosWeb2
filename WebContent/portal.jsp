@@ -20,8 +20,12 @@
 				<h1>Bem vindo, ${loginBean.nome}!</h1>
 				<h3>Menu</h3>
 				<div>
-					<a class="btn btn-primary" href='${pageContext.request.contextPath}/ClientesServlet'>Cadastro de clientes</a>
-					<a class="btn btn-warning" href='${pageContext.request.contextPath}/LogoutServlet'>Logout</a>
+					<a class="btn btn-primary btn-new" href='${pageContext.request.contextPath}/ClientesServlet'>Cadastro de clientes</a>
+					<a class="btn btn-warning btn-new" href='${pageContext.request.contextPath}/LogoutServlet'>Logout</a>
+				</div>
+				<div>
+					<a class="btn btn-primary btn-new" href='${pageContext.request.contextPath}/AtendimentoServlet'>Atendimentos</a>
+					<a class="btn btn-success btn-new" href='${pageContext.request.contextPath}/AtendimentoServlet?action=formNew'>Efetuar atendimento</a>
 				</div>
 				<div class="footer">
 					<p>Em caso de problemas, contatar o adminstrador.</p>

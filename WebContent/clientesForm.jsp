@@ -26,7 +26,7 @@
 					</c:if>
 					<div class="row">
 						<div class="col-md-6">
-							CPF: <input  type="text" name="cpf" maxlength="11" value="${not empty cliente ? cliente.cpf : ''}" class="form-control" required/>
+							CPF: <input  type="text" name="cpf" id="cpf" value="${not empty cliente ? cliente.cpf : ''}" class="form-control" required/>
 						</div>
 						<div class="col-md-6">
 							Nome: <input type="text" name="nome" value="${not empty cliente ? cliente.nome : ''}" class="form-control" required/>
@@ -48,7 +48,7 @@
 							Numero <input type="number" name="nr" value="${not empty cliente ? cliente.nr : ''}" class="form-control" required/>
 						</div>
 						<div class="col-md-4">
-							CEP <input type="text" name="cep" maxlength="8"  value="${not empty cliente ? cliente.cep : ''}" class="form-control" required/>
+							CEP <input type="text" name="cep" id="cep" value="${not empty cliente ? cliente.cep : ''}" class="form-control" required/>
 						</div>
 					</div>
 					<div class="row">
