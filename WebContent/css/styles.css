@@ -1,0 +1,116 @@
+.flex-container {
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.form-title {
+	margin: 10px 0 20px;
+}
+
+.purple-box {
+    width: 600px;
+    padding: 25px;
+    background-color: #613BC0;
+}
+
+.purple-box.login {
+    width: 400px;
+}
+
+.purple-input {
+    border: 1px solid #00A6FF;
+    background-color: #0C0F6F;
+}
+
+.purple-btn {
+    background-color: #976dcf;
+}
+
+.form-content {
+    border-bottom: 1px solid #333333;
+}
+
+.login-button {
+    margin: 50px 0 20px;
+    border: 1px solid #00A6FF;
+    background-color: #0C0F6F;
+    width: 100%;
+}
+
+.footer {
+    padding: 15px 0 0;
+}
+.footer p {
+    margin: 0;
+}
+
+.btn {
+	color: #FFF;
+	
+}
+.btn-new {
+    margin: 18px 0;
+    width: 100%;
+}
+
+.mleft-10 {
+	margin-left: 10px;
+}
+
+.custom-table td, .custom-table th {
+    border: 1px solid #D2D2D2;
+}
+
+.custom-table .action {
+	width: 150px;
+}
+
+.navbar-custom {
+	width: 100%;
+    height: 60px;
+    background-color: white;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    background-color: #976dcf;
+}
+.sidebar {
+	width: 17.5%;
+	height: 100%;
+	background-color: #976dcf;
+	position: fixed;
+}
+.sidebar .btn {
+    text-align: left;
+    padding: 20px;
+    background-color: #53298b;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+    width: 100%;
+}
+.sidebar .head {
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+}
+.content-container {
+    width: 82.5%;
+    padding: 50px;
+    margin-left: 17.5%;
+}
+.margin-navbar {
+    margin-top: 60px;
+}
+
+.logo {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
+@font-face {
+    font-family: 'Daddy Girl';
+    src: url('./fonts/daddysgirl.ttf');
+}
