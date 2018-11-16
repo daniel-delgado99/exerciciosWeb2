@@ -8,32 +8,18 @@
 	<title>Portal</title>
 </head>
 <body>
-	<c:if test="${loginBean.nome == null }">	
+	<c:if test="${login == null }">	
 		<jsp:forward page="index.jsp"> 
 			<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
 		</jsp:forward> 
 	</c:if>
-	<c:if test="${loginBean.nome != null }">
-	<div class="flex-container">
-		<div class="purple-box login">
-			<div class="col-md-12">
-				<h1>Bem vindo, ${loginBean.nome}!</h1>
-				<h3>Menu</h3>
-				<div>
-					<a class="btn btn-primary btn-new" href='${pageContext.request.contextPath}/ClientesServlet'>Cadastro de clientes</a>
-					<a class="btn btn-warning btn-new" href='${pageContext.request.contextPath}/LogoutServlet'>Logout</a>
-				</div>
-				<div>
-					<a class="btn btn-primary btn-new" href='${pageContext.request.contextPath}/AtendimentoServlet'>Atendimentos</a>
-					<a class="btn btn-success btn-new" href='${pageContext.request.contextPath}/AtendimentoServlet?action=formNew'>Efetuar atendimento</a>
-				</div>
-				<div class="footer">
-					<p>Em caso de problemas, contatar o adminstrador.</p>
-					<p>${applicationScope['adminEmail']}</p>
-				</div>
+	<c:if test="${login != null }">
+		<%@ include file="sidebar.jsp" %>
+		<div class="content-container">
+			<div class="flex-container">
+				<h1>Em construcao</h1>
 			</div>
 		</div>
-	</div>
     </c:if>
 </body>
 </html>

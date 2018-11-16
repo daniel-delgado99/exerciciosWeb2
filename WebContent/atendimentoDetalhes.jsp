@@ -36,7 +36,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							Descrição: <textarea type="text" name="desc" rows="6" disabled class="form-control" required>${atendimento.desc}</textarea>
+							Descriï¿½ï¿½o: <textarea type="text" name="desc" rows="6" disabled class="form-control" required>${atendimento.desc}</textarea>
 						</div>
 					</div>
 					<div class="row">
@@ -66,7 +66,7 @@
 								<input type="radio" name="res" ${atendimento.res == 'S' ? 'checked' : ''}/><span class="mleft-10">Sim</span>
 							</div>
 							<div>
-								<input type="radio" name="res" ${atendimento.res == 'N' ? 'checked' : ''}/><span class="mleft-10">Não</span>
+								<input type="radio" name="res" ${atendimento.res == 'N' ? 'checked' : ''}/><span class="mleft-10">Nï¿½o</span>
 							</div>
 						</div>
 					</div>

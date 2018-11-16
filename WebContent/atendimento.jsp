@@ -30,7 +30,7 @@
 							</select>
 						</div>
 						<div class="col-md-6">
-							Data/Hora: <input id="dataHora" type="text" name="dtHr" value="getCurrentDate()" class="form-control" required/>
+							Data/Hora: <input id="dataHora" type="text" name="dtHr" class="form-control" required/>
 						</div>
 					</div>
 					<div class="row">

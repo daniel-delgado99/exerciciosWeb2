@@ -7,9 +7,9 @@ public class Atendimento {
 	private String res;
 	private Produto produto;
 	private TipoAtendimento tipoAtendimento;
-	private Usuario usuario;
+	private Funcionario funcionario;
 	private Cliente cliente;
-	
+
 	public Atendimento() {
 	}
 
@@ -61,12 +61,12 @@ public class Atendimento {
 		this.tipoAtendimento = tipoAtendimento;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public Cliente getCliente() {

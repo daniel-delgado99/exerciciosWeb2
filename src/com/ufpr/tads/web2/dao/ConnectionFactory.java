@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ConnectionFactory {
     
@@ -30,7 +28,7 @@ public class ConnectionFactory {
 
             String server = prop.getProperty("bd.server");
             String port = prop.getProperty("bd.port");
-            String options = prop.getProperty("bd.options");
+            // String options = prop.getProperty("bd.options");
             String instance = prop.getProperty("bd.instance");
             String user = prop.getProperty("bd.user");
             String password = prop.getProperty("bd.password");
@@ -40,7 +38,7 @@ public class ConnectionFactory {
             return DriverManager.getConnection(url,user,password);
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("Erro ao conectar com o banco de dados! "+ ex.getMessage());
-            throw new RuntimeException("Conexão com o banco falhou.");
+            throw new RuntimeException("Conexï¿½o com o banco falhou.");
         } catch (IOException ex) {
             System.out.println("Erro ao ler arquivo de propriedade! "+ ex.getMessage());
             throw new RuntimeException("Falha ao ler arquivo de propriedade do banco."); 

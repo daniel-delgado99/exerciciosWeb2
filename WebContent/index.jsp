@@ -10,24 +10,31 @@
 		<title>Login</title>
     </head>
     <body>
-		<div class="flex-container">
-			<div class="purple-box login">
-				<div class="form-content">
-					<h4>INICIAR SESSAO</h4>
-					<form class="form-group" action="LoginServlet" method="POST">
-						Nome de usuario<input class="form-control purple-input" type="text" name="login"><br>
-						Senha<input class="form-control purple-input" type="password" name="senha"><br>
-						<% if (request.getAttribute("msg") != null) { %>
-							<span style="color: red"><%= request.getAttribute("msg") %></span>
-						<% } %>
-						<button class="btn login-button" type="submit">Iniciar sessao</button><br>
-					</form>
-				</div>
-				<div class="footer">
-					<p>Em caso de problemas, contatar o adminstrador.</p>
-					<p>${applicationScope['adminEmail']}</p>
+	    <c:if test="${login != null }">	
+			<jsp:forward page="portal.jsp"> 
+				<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
+			</jsp:forward> 
+		</c:if>
+		<c:if test="${login == null }">
+			<div class="flex-container">
+				<div class="purple-box login">
+					<div class="form-content">
+						<h4>INICIAR SESSAO</h4>
+						<form class="form-group" action="LoginServlet" method="POST">
+							Nome de usuario<input class="form-control purple-input" type="email" name="email"><br>
+							Senha<input class="form-control purple-input" type="password" name="senha"><br>
+							<c:if test="${msg != null }">	
+								<span style="color: red"><c:out value="${msg}"/></span>
+							</c:if>	
+							<button class="btn login-button" type="submit">Iniciar sessao</button><br>
+						</form>
+					</div>
+					<div class="footer">
+						<p>Em caso de problemas, contatar o adminstrador.</p>
+						<p><c:out value="${applicationScope.adminEmail}"/></p>
+					</div>
 				</div>
 			</div>
-		</div>     
+		</c:if>     
     </body>
 </html>

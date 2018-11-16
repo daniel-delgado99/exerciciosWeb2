@@ -1,10 +1,5 @@
 package com.ufpr.tads.web2.servlets;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ufpr.tads.web2.beans.LoginBean;
-import com.ufpr.tads.web2.dao.ConnectionFactory;
+import com.ufpr.tads.web2.facade.LoginFacade;
 
 @WebServlet(urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -28,46 +23,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String login = request.getParameter("login");
+        String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        String senhaBD = "";
-        int id = 0;
-        int tamanho = 0;
         
-        try {
-        	Connection con = ConnectionFactory.getConnectionFactory().getConnection();
-        	PreparedStatement pst;
-			pst = con.prepareStatement("SELECT id_usuario, login_usuario, senha_usuario FROM tb_usuario where login_usuario=?");
-			pst.setString(1, login);
-	        ResultSet rs = pst.executeQuery();
-	        
-	        rs.last();
-	        tamanho = rs.getRow();
-	        
-	        if (tamanho != 1) {
-	        	this.redirectToError(request, response);
-	        } else {
-	        	id = rs.getInt("id_usuario");
-	        	login = rs.getString("login_usuario");
-		        senhaBD = rs.getString("senha_usuario");
-		        
-		        if (senha.equals(senhaBD)) {
-		        	LoginBean loginBean = new LoginBean(id, login);
-		        	this.setSession(request, loginBean);
-		        	this.redirectToPortal(request, response);
-		        } else {
-		        	this.redirectToError(request, response);
-		        }
-	        }
-	        
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        LoginBean loginBean = LoginFacade.efetuarLogin(email, senha);
+        if (loginBean != null) {
+        	this.setSession(request, loginBean);        	
+        	this.redirectToPortal(request, response);
+        } else {
+        	this.redirectToError(request, response);
+        }
     }
 
     public void redirectToError(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-        String msg = "Usuario e senha invalidos";
+        String msg = "Usuario ou senha invalida";
         String page = "index.jsp";
         try {
         	request.setAttribute("msg", msg);
@@ -89,9 +59,9 @@ public class LoginServlet extends HttpServlet {
     
     public void setSession(HttpServletRequest request, LoginBean loginUsuario) {
     	HttpSession session = request.getSession();
-    	session.setAttribute("loginBean", loginUsuario);
-		session.setAttribute("username", loginUsuario.getNome());
-		session.setAttribute("userid", loginUsuario.getId());
-		//session.setAttribute("someKey","someValue");
+    	session.setAttribute("login", loginUsuario);
+		// session.setAttribute("username", loginUsuario.getNome());
+		// session.setAttribute("userid", loginUsuario.getId());
+		// session.setAttribute("someKey","someValue");
     }
 }

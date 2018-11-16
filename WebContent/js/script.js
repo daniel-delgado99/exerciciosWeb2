@@ -7,8 +7,8 @@ $(document).ready(function() {
     $("#cep").mask('00000-000');
     
     $("#dataHora").val(getCurrentDate());
-    $("#dataHora").trigger('click');
-    $("#dataHora").prop('disabled', true);
+//    $("#dataHora").trigger('click');
+//    $("#dataHora").prop('disabled', true);
     
 });
 

@@ -8,12 +8,12 @@
 	<title>Novo cliente</title>
 </head>
 <body>
-	<c:if test="${loginBean.nome == null }">	
+	<c:if test="${login == null }">	
 		<jsp:forward page="index.jsp"> 
 			<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
 		</jsp:forward> 
 	</c:if>
-	<c:if test="${loginBean.nome != null }">
+	<c:if test="${login != null }">
 		<div class="flex-container">
 			<div class="form-cliente">
 				<form class="purple-box" action="${not empty cliente ? 'ClientesServlet?action=update' : 'ClientesServlet?action=new'}" method="post" class="form-group">
@@ -57,7 +57,7 @@
 							<select id="estado" name="estado" class="form-control">
 								<option value="" selected disabled>Selecione um estado</option>
 								<c:forEach items="${estados}" var="estado">
-									<option value="${estado.id}" ${not empty cliente && cliente.cidade.estado.id == estado.id ? 'selected' : ''}>${estado.nome}</option>
+									<option value="${estado.id}" ${not empty cliente && cliente.cidade.estado.id == estado.id ? 'selected' : ''}><c:out value="${estado.nome}"/></option>
 								</c:forEach>
 							</select>
 						</div>
@@ -65,7 +65,7 @@
 							Cidade
 							<select id="cidade" name="cidade" class="form-control">
 								<c:if test="${not empty cliente}">
-									<option value="${cliente.cidade.id}" selected>${cliente.cidade.nome}</option>
+									<option value="${cliente.cidade.id}" selected><c:out value="${cliente.cidade.nome}"/></option>
 								</c:if>
 								<c:if test="${empty cliente}">
 									<option value="" selected disabled>Selecione uma cidade</option>
