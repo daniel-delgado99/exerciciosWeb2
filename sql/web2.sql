@@ -35,7 +35,7 @@ id_tipo_usuario int
 -- create table tb_gerente (
 -- id_gerente int primary key AUTO_INCREMENT,
 -- id_usuario int
--- );
+-- );
 
 create table tb_cidade(
 id_cidade int primary key AUTO_INCREMENT,
