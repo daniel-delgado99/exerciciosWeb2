@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-   		<%@ include file="header.jsp" %>  
+   		<%@ include file="header.jsp" %>
 		<title>Login</title>
     </head>
     <body>
@@ -30,8 +30,8 @@
 						</form>
 					</div>
 					<div class="footer">
-						<p>Em caso de problemas, contatar o adminstrador.</p>
-						<p><c:out value="${applicationScope.adminEmail}"/></p>
+						<p>Não possui uma conta?</p>
+						<a href='${pageContext.request.contextPath}/UsuarioServlet?action=autocadastro'>Cadastrar-se</a>
 					</div>
 				</div>
 			</div>

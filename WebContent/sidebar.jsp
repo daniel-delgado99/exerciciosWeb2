@@ -11,7 +11,7 @@
 		</div>
 		<div class="links">
 			<c:if test="${login.tipoUsuario == 1 }">
-				<a class="btn" href='#'>Alterar dados</a>
+				<a class="btn" href='${pageContext.request.contextPath}/UsuarioServlet?action=formUpdate&id=${login.id}'>Alterar dados</a>
 				<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Meus atendimentos</a>
 				<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=formNew'>Solicitar atendimento</a>
 			</c:if>
@@ -25,14 +25,14 @@
 				<a class="btn" href='${pageContext.request.contextPath}/ProdutoServlet'>Cadastro de produtos</a>
 			</c:if>
 			<c:if test="${login.tipoUsuario == 3 }">
-				<a class="btn" href='#'>Cadastrar funcionário</a>
+				<a class="btn" href='${pageContext.request.contextPath}/UsuarioServlet'>Cadastrar funcionário</a>
 				<a id="collapseButton" class="btn">Atendimentos</a>
 				<div id="collapsedItems" class="collapsed-items">
 					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Todos</a>
 					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=listAbertos'>Em aberto</a>				
 				</div>
 				<a class="btn" href='${pageContext.request.contextPath}/CategoriaServlet'>Cadastro de categorias</a>
-				<a class="btn" href='#'>Cadastro de produtos</a>
+				<a class="btn" href='${pageContext.request.contextPath}/ProdutoServlet'>Cadastro de produtos</a>
 				<a class="btn" href='#'>Relatórios</a>
 			</c:if>
 			<a class="btn" href='${pageContext.request.contextPath}/LogoutServlet'>Logout</a>

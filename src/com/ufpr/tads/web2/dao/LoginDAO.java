@@ -11,7 +11,7 @@ public class LoginDAO {
 	
 	public static LoginBean efetuarLogin(String email, String senha) {
 		PreparedStatement pst;
-		LoginBean loginBean = new LoginBean();
+		LoginBean loginBean = null;
 		try {
 			pst = con.prepareStatement("SELECT id_usuario, nome_usuario, email_usuario, senha_usuario, id_tipo_usuario FROM tb_usuario where email_usuario=?");
 			pst.setString(1, email);
@@ -25,6 +25,7 @@ public class LoginDAO {
 	        
 	        if (senha.equals(senhaBD)) {
 	        	// aqui em cima checar criptografia
+	        	loginBean = new LoginBean();
 	        	loginBean.setId(id);
 	        	loginBean.setNome(nome);
 	        	loginBean.setEmail(email);

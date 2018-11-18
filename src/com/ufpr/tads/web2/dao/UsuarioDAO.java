@@ -21,10 +21,21 @@ public class UsuarioDAO {
 		PreparedStatement pst;
 		try {
 			pst = con.prepareStatement(
-					"INSERT INTO tb_usuario(nome_usuario, login_usuario, senha_usuario) values (?,?,?)");
-			pst.setString(1, u.getNome());
-			pst.setString(2, u.getLogin());
-			pst.setString(3, u.getSenha());
+					"INSERT INTO tb_usuario("
+						+ "cpf_usuario, nome_usuario, email_usuario, senha_usuario, data_usuario, "
+						+ "rua_usuario, nr_usuario, cep_usuario, id_cidade, id_tipo_usuario"
+					+ ") "
+					+ "values (?,?,?,?,?,?,?,?,?,?)");
+			pst.setString(1, u.getCpf());
+			pst.setString(2, u.getNome());
+			pst.setString(3, u.getEmail());
+			pst.setString(4, u.getSenha());
+			pst.setString(5, u.getData());
+			pst.setString(6, u.getRua());
+			pst.setInt(7, u.getNr());
+			pst.setString(8, u.getCep());
+			pst.setInt(9, u.getCidade().getId());
+			pst.setInt(10, u.getTipoUsuario().getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,21 +103,16 @@ public class UsuarioDAO {
 	public static void alterarUsuario(Usuario c) {
 		PreparedStatement pst;
 		try {
-			pst = con.prepareStatement("UPDATE tb_cliente SET " + "cpf_cliente = ?," + "nome_cliente = ?, "
-					+ "email_cliente = ?, " + "senha_cliente = ?, " + "data_cliente = ?, " + "rua_cliente = ?, "
-					+ "nr_cliente = ?, " + "cep_cliente = ?, " + "id_cidade = ?, " + "id_tipo_usuario = ?, "
-					+ "WHERE id_cliente = ?;");
-			pst.setString(1, c.getCpf());
-			pst.setString(2, c.getNome());
-			pst.setString(3, c.getEmail());
-			pst.setString(5, c.getSenha());
-			pst.setString(5, c.getData());
-			pst.setString(6, c.getRua());
-			pst.setInt(7, c.getNr());
-			pst.setString(8, c.getCep());
-			pst.setInt(9, c.getCidade().getId());
-			pst.setInt(10, c.getId());
-			pst.setInt(11, c.getTipoUsuario().getId());
+			pst = con.prepareStatement("UPDATE tb_usuario SET nome_usuario = ?, data_usuario = ?, rua_usuario = ?, "
+					+ "nr_usuario = ?,  cep_usuario = ?, id_cidade = ?,  id_tipo_usuario = ? WHERE id_usuario = ?;");
+			pst.setString(1, c.getNome());
+			pst.setString(2, c.getData());
+			pst.setString(3, c.getRua());
+			pst.setInt(4, c.getNr());
+			pst.setString(5, c.getCep());
+			pst.setInt(6, c.getCidade().getId());
+			pst.setInt(7, c.getTipoUsuario().getId());
+			pst.setInt(8, c.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -185,7 +191,7 @@ public class UsuarioDAO {
 		PreparedStatement pst;
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		try {
-			pst = con.prepareStatement("SELECT * FROM tb_funcionario WHERE id_tipo_usuario = 2;");
+			pst = con.prepareStatement("SELECT * FROM tb_usuario WHERE id_tipo_usuario = 2;");
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				Funcionario f = new Funcionario();
@@ -242,7 +248,7 @@ public class UsuarioDAO {
 		PreparedStatement pst;
 		List<Gerente> gerentes = new ArrayList<Gerente>();
 		try {
-			pst = con.prepareStatement("SELECT * FROM tb_Gerente WHERE id_tipo_usuario = 3;");
+			pst = con.prepareStatement("SELECT * FROM tb_usuario WHERE id_tipo_usuario = 3;");
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				Gerente g = new Gerente();

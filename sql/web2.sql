@@ -182,6 +182,6 @@ insert into tb_atendimento(dt_hr_atendimento, desc_atendimento, res_atendimento,
 
 -- select * from tb_categoria_produto;
 -- select * from tb_produto;
--- select * from tb_usuario;
+select * from tb_usuario;
 -- select * from tb_cidade;
 -- select * from tb_atendimento;

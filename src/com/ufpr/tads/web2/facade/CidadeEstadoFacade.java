@@ -24,6 +24,10 @@ public class CidadeEstadoFacade {
     public static List<Cidade> buscarTodosCidades() {
         return CidadeDAO.buscarCidades();
     }
+    
+    public static List<Cidade> buscarCidadesPorEstado(int estadoId) {
+    	return CidadeDAO.buscarCidadesPorEstado(estadoId);
+    }
 
     // public static void excluirCidade(int id) {
     //     CidadeDAO.removerCidade(id);

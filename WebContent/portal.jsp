@@ -17,7 +17,7 @@
 		<%@ include file="sidebar.jsp" %>
 		<div class="content-container">
 			<div class="flex-container">
-				<h1>Em construcao</h1>
+				<h1>Portal</h1>
 			</div>
 		</div>
     </c:if>
