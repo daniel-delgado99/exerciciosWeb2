@@ -17,7 +17,7 @@ import com.ufpr.tads.web2.beans.Estado;
 import com.ufpr.tads.web2.facade.CidadeEstadoFacade;
 import com.ufpr.tads.web2.facade.UsuarioFacade;
 
-@WebServlet("/ClientesServlet")
+@WebServlet("/ClienteServlet")
 public class ClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -20,7 +20,7 @@ public class ProdutoDAO {
 					"INSERT INTO tb_produto (nome_produto, desc_produto, peso_produto, id_categoria_produto) values (?, ?, ?, ?);");
 			pst.setString(1, p.getNome());
 			pst.setString(2, p.getDesc());
-			pst.setDouble(3, p.getPeso());
+			pst.setInt(3, p.getPeso());
 			pst.setInt(4, p.getCategoriaProduto().getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -39,9 +39,8 @@ public class ProdutoDAO {
 				p.setId(rs.getInt("id_produto"));
 				p.setNome(rs.getString("nome_produto"));
 				p.setDesc(rs.getString("desc_produto"));
-				p.setPeso(Double.parseDouble(rs.getString("peso_produto")));
-				p.setCategoriaProduto(
-						ProdutoFacade.buscarCategoriaProduto(Integer.parseInt(rs.getString("id_categoria_produto"))));
+				p.setPeso(Integer.parseInt(rs.getString("peso_produto")));
+				p.setCategoriaProduto(ProdutoFacade.buscarCategoriaProduto(Integer.parseInt(rs.getString("id_categoria_produto"))));
 
 				produtos.add(p);
 			}
@@ -65,9 +64,8 @@ public class ProdutoDAO {
 				p.setId(rs.getInt("id_produto"));
 				p.setNome(rs.getString("nome_produto"));
 				p.setDesc(rs.getString("desc_produto"));
-				p.setPeso(Double.parseDouble(rs.getString("peso_produto")));
-				p.setCategoriaProduto(
-						ProdutoFacade.buscarCategoriaProduto(Integer.parseInt(rs.getString("id_categoria_produto"))));
+				p.setPeso(Integer.parseInt(rs.getString("peso_produto")));
+				p.setCategoriaProduto(ProdutoFacade.buscarCategoriaProduto(Integer.parseInt(rs.getString("id_categoria_produto"))));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,11 +76,11 @@ public class ProdutoDAO {
 	public static void alterarProduto(Produto p) {
 		PreparedStatement pst;
 		try {
-			pst = con.prepareStatement(
-					"UPDATE tb_produto SET nome_produto = ?, desc_produto = ?, peso_produto = ?, id_categoria_produto = ? WHERE id_produto = ?;");
+			pst = con.prepareStatement("UPDATE tb_produto SET nome_produto = ?, desc_produto = ?, peso_produto = ?, "
+					+ "id_categoria_produto = ? WHERE id_produto = ?;");
 			pst.setString(1, p.getNome());
 			pst.setString(2, p.getDesc());
-			pst.setDouble(3, p.getPeso());
+			pst.setInt(3, p.getPeso());
 			pst.setInt(4, p.getCategoriaProduto().getId());
 			pst.setInt(5, p.getId());
 			pst.executeUpdate();

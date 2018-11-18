@@ -12,12 +12,18 @@ import javax.servlet.http.HttpSession;
 import com.ufpr.tads.web2.beans.LoginBean;
 import com.ufpr.tads.web2.facade.LoginFacade;
 
-@WebServlet(urlPatterns = {"/LoginServlet"})
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public LoginServlet() {
+		super();
+	}
 
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+		doPost(request, response);
     }
 
     @Override
@@ -49,10 +55,9 @@ public class LoginServlet extends HttpServlet {
     }
     
     public void redirectToPortal(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/portal.jsp");
-        try {
-			dispatcher.forward(request,response);
-		} catch (ServletException | IOException e) {
+		try {
+			response.sendRedirect(request.getContextPath() + "/portal.jsp");
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
     }
@@ -60,8 +65,5 @@ public class LoginServlet extends HttpServlet {
     public void setSession(HttpServletRequest request, LoginBean loginUsuario) {
     	HttpSession session = request.getSession();
     	session.setAttribute("login", loginUsuario);
-		// session.setAttribute("username", loginUsuario.getNome());
-		// session.setAttribute("userid", loginUsuario.getId());
-		// session.setAttribute("someKey","someValue");
     }
 }

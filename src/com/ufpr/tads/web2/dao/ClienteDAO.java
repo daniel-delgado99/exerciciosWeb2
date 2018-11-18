@@ -1,11 +1,13 @@
 package com.ufpr.tads.web2.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import com.ufpr.tads.web2.beans.Cliente;
 
@@ -17,7 +19,7 @@ public class ClienteDAO {
 		try {
 			pst = con.prepareStatement("INSERT INTO tb_cliente"
 					+ "(cpf_cliente, nome_cliente, email_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, id_cidade) "
-					+ "values (?,?,?,?,?,?,?,?)");
+					+ "values (?,?,?,?,?,?,?,?);");
 			pst.setString(1, c.getCpf());
 			pst.setString(2, c.getNome());
 			pst.setString(3, c.getEmail());
@@ -44,6 +46,9 @@ public class ClienteDAO {
 				c.setCpf(rs.getString("cpf_cliente"));
 				c.setNome(rs.getString("nome_cliente"));
 				c.setEmail(rs.getString("email_cliente"));
+//				String dateStr = "28 June 2009";
+//	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//	            System.out.println(sdf.format(new Date(dateStr)));
 				c.setData(rs.getString("data_cliente"));
 				c.setRua(rs.getString("rua_cliente"));
 				c.setNr(rs.getInt("nr_cliente"));

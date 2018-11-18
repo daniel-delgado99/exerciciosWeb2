@@ -8,18 +8,24 @@
 	<title>Atendimento</title>
 </head>
 <body>
-	<c:if test="${loginBean.nome == null }">	
+	<c:if test="${ empty login }">	
 		<jsp:forward page="index.jsp"> 
 			<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
 		</jsp:forward> 
 	</c:if>
-	<c:if test="${loginBean.nome != null }">
-		<div class="flex-container">
-			<div class="form-cliente">
-				<form class="purple-box" action="AtendimentoServlet?action=new" method="post" class="form-group">
+	<c:if test="${ not empty login }">
+		<%@ include file="sidebar.jsp" %>
+		<div class="content-container">
+			<div class="col-md-12">
+				<form class="" action="AtendimentoServlet?action=new" method="post" class="form-group">
 					<h2 class="form-title">Novo Atendimento</h2>
+					<input type="hidden" name="cliente" value="${login.id}"/>
 					<div class="row">
-						<input type="hidden" name="usuario" value="${loginBean.id}"/>
+						<div class="col-md-6">
+							Data/Hora: <input id="dataHora" type="text" readonly name="dtHr" class="form-control" required/>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-6">
 							Tipo de atendimento
 							<select name="tipoAtendimento" class="form-control">
@@ -29,16 +35,7 @@
 								</c:forEach>
 							</select>
 						</div>
-						<div class="col-md-6">
-							Data/Hora: <input id="dataHora" type="text" name="dtHr" class="form-control" required/>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							Descrição: <textarea type="text" name="desc" rows="6" class="form-control" required></textarea>
-						</div>
-					</div>
-					<div class="row">
+					
 						<div class="col-md-6">
 							Produto
 							<select name="produto" class="form-control">
@@ -48,25 +45,10 @@
 								</c:forEach>
 							</select>
 						</div>
-						<div class="col-md-6">
-							Cliente
-							<select name="cliente" class="form-control">
-								<option value="" selected disabled>Selecione um produto</option>
-								<c:forEach items="${clientes}" var="cliente">
-									<option value="${cliente.id}">${cliente.nome}</option>
-								</c:forEach>
-							</select>
-						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
-						Foi resolvido?
-							<div>
-								<input type="radio" name="res" value="S"/><span class="mleft-10">Sim</span>
-							</div>
-							<div>
-								<input type="radio" name="res" value="N"/><span class="mleft-10">Não</span>
-							</div>
+						<div class="col-md-12">
+							Descrição: <textarea type="text" name="desc" rows="6" class="form-control" required></textarea>
 						</div>
 					</div>
 					<div class="row">

@@ -22,6 +22,22 @@ public class AtendimentoFacade {
 	public static List<Atendimento> buscarTodosAtendimentos() {
 		return AtendimentoDAO.buscarAtendimentos();
 	}
+	
+	public static List<Atendimento> buscarAtendimentosPorCliente(int id) {
+		return AtendimentoDAO.buscarAtendimentosPorClienteId(id);
+	}
+	
+	public static List<Atendimento> buscarAtendimentosEmAberto() {
+		return AtendimentoDAO.buscarAtendimentosEmAberto();
+	}
+	
+	public static void alterarAtendimento(Atendimento a) {
+		AtendimentoDAO.alterarAtendimento(a);
+	}
+	
+	public static void removerAtendimento(int id) {
+		AtendimentoDAO.removerAtendimento(id);
+	}
 
 	// Tipo atendimento
 	public static TipoAtendimento buscarTipoAtendimento(int id) {

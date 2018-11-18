@@ -58,7 +58,7 @@ create table tb_produto (
 id_produto int primary key AUTO_INCREMENT,
 nome_produto varchar(100),
 desc_produto varchar(255),
-peso_produto float,
+peso_produto int,
 id_categoria_produto int
 );
 
@@ -72,9 +72,9 @@ id_atendimento int primary key AUTO_INCREMENT,
 dt_hr_atendimento char(20),
 desc_atendimento varchar(255),
 res_atendimento char(1),
+solucao_atendimento varchar(255),
 id_produto int,
 id_tipo_atendimento int,
-id_funcionario int,
 id_cliente int
 );
 
@@ -88,11 +88,11 @@ ALTER TABLE tb_usuario ADD FOREIGN KEY (id_tipo_usuario) REFERENCES tb_tipo_usua
 ALTER TABLE tb_usuario ADD FOREIGN KEY (id_cidade) REFERENCES tb_cidade(id_cidade);
 ALTER TABLE tb_cidade ADD FOREIGN KEY (id_estado) REFERENCES tb_estado(id_estado);
 
-ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_produto) REFERENCES tb_produto(id_produto);
-ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_tipo_atendimento) REFERENCES tb_tipo_atendimento(id_tipo_atendimento);
-ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_funcionario) REFERENCES tb_usuario(id_usuario);
-ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_cliente) REFERENCES tb_usuario(id_usuario);
+ALTER TABLE tb_produto ADD FOREIGN KEY (id_categoria_produto) REFERENCES tb_categoria_produto(id_categoria_produto) ON DELETE CASCADE;
 
+ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_produto) REFERENCES tb_produto(id_produto) ON DELETE CASCADE;
+ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_tipo_atendimento) REFERENCES tb_tipo_atendimento(id_tipo_atendimento);
+ALTER TABLE tb_atendimento ADD FOREIGN KEY (id_cliente) REFERENCES tb_usuario(id_usuario) ON DELETE CASCADE;
 
 -- inserts
 insert into tb_tipo_atendimento (nome_tipo_atendimento) values
@@ -170,21 +170,18 @@ insert into tb_usuario (
 ("12345678917", "Jose Carlos",      "jose@jose",        "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
 ("12345678918", "Geraldo Martins",  "geraldo@geraldo",  "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3),
 ("12345678919", "Outro nome",       "outro@outro",      "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678920", "Poderoso A",       "a@a",              "a",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2);
+("12345678920", "Poderoso A",       "a@a",              "a",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
+("12345678921", "Poderoso B",       "b@b",              "b",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
+("12345678922", "Poderoso C",       "c@c",              "c",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3);
 
--- insert into tb_cliente(id_cliente) values (1),(4),(7),(10);
+insert into tb_atendimento(dt_hr_atendimento, desc_atendimento, res_atendimento, solucao_atendimento, id_produto, id_tipo_atendimento, id_cliente) values
+('2018-01-01 12:00:00', "Um atendimento muito legal", 'S', "Obrigado", 1, 3, 1),
+('2018-01-01 12:00:00', "Não gostei, achei meio bosta", 'S', "Ninguém liga pra sua opinião", 4, 1, 4),
+('2018-01-01 12:00:00', "Acho que vcs podiam fazer outra coisa", 'S', "Quem sabe um dia", 6, 2, 7),
+('2018-01-01 12:00:00', "Oq vcs fazem?", 'N', null, 3, 4, 10);
 
--- insert into tb_funcionario(id_funcionario) values (2),(5),(8),(11);
-
--- insert into tb_gerente(id_gerente) values (3),(6),(9);
-
-insert into tb_atendimento(dt_hr_atendimento, desc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_funcionario, id_cliente) values
-('2018-01-01 12:00:00', "Um atendimento muito legal", 'S', 1, 3, 1, 3),
-('2018-01-01 12:00:00', "Não gostei, achei meio bosta", 'S', 4, 1, 1, 5),
-('2018-01-01 12:00:00', "Acho que vcs podiam fazer outra coisa", 'S', 6, 2, 2, 6),
-('2018-01-01 12:00:00', "Oq vcs fazem?", 'N', 3, 4, 2, 7);
-
-select * from tb_usuario;
-select * from tb_cliente;
-select * from tb_cidade;
-select * from tb_atendimento;
+-- select * from tb_categoria_produto;
+-- select * from tb_produto;
+-- select * from tb_usuario;
+-- select * from tb_cidade;
+-- select * from tb_atendimento;

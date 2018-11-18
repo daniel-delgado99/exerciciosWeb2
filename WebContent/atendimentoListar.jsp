@@ -8,52 +8,74 @@
 	<title>Lista de Atendimentos</title>
 </head>
 <body>
-	<c:if test="${login.nome == null }">	
+	<c:if test="${ empty login }">	
 		<jsp:forward page="index.jsp"> 
 			<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
 		</jsp:forward> 
 	</c:if>
-	<c:if test="${login.nome != null }">
-		<div class="">
-			<%@ include file="sidebar.jsp" %>
-			<div class="content-container">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-10">
-							<h1>Atendimentos realizados</h1>
-						</div>
+	<c:if test="${ not empty login }">
+		<%@ include file="sidebar.jsp" %>
+		<div class="content-container">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-10">	
+						<h1><c:out value="${title}"/></h1>
+					</div>
+					<c:if test="${login.tipoUsuario == 1}">
 						<div class="col-md-2">
 							<a class="btn btn-success btn-new" href="${pageContext.request.contextPath}/AtendimentoServlet?action=formNew">Novo</a>
 						</div>
-					</div>
-					<c:set var="atendimentos" scope="request" value="${atendimentos}"/>
-					
-					<c:if test="${atendimentos == null}">
-						<p>Nada a mostrar</p>
 					</c:if>
-					<c:if test="${atendimentos != null}"> 
-						<table class="table custom-table">	      
-							<tr>
-								<th>Data/Hora</th>
-								<th>Produto</th>
+				</div>
+				<c:set var="atendimentos" scope="request" value="${atendimentos}"/>
+				
+				<c:if test="${atendimentos.size() == 0}">
+					<p>Nenhum atendimento encontrado</p>
+				</c:if>
+				<c:if test="${atendimentos.size() != 0}"> 
+					<table class="table custom-table">	      
+						<tr>
+							<th>Data/Hora</th>
+							<th>Descrição</th>
+							<th>Produto</th>
+							<c:if test="${login.tipoUsuario != 1}">
 								<th>Nome do cliente</th>
-								<th class="action">Acoes</th>
-							</tr>
-							<c:forEach items="${atendimentos}" var="atendimento">
-								<tr>
-									<td><c:out value="${atendimento.dataHora}"/></td>
-									<td><c:out value="${atendimento.produto.nome}"/></td>
+							</c:if>
+							<th>Resolvido</th>
+							<th class="action">Acoes</th>
+						</tr>
+						<c:forEach items="${atendimentos}" var="atendimento">
+							<tr>
+								<td><c:out value="${atendimento.dataHora}"/></td>
+								<td><c:out value="${atendimento.desc}"/></td>
+								<td><c:out value="${atendimento.produto.nome}"/></td>
+								<c:if test="${login.tipoUsuario != 1}">
 									<td><c:out value="${atendimento.cliente.nome}"/></td>
-									<td>
-										<a class="btn purple-btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=show&id=${atendimento.id}'>Ver atendimento</a>
-									</td>
-								</tr>
-							</c:forEach>
-						</table>
-						<div>
-							<a class="btn btn-primary" href='${pageContext.request.contextPath}/portal.jsp'>Voltar para portal</a>
-						</div>
-					</c:if>
+								</c:if>
+								<td>
+									<c:if test="${atendimento.res == 'S'}">
+										<span class="green">
+											<i class="fas fa-check-circle"></i>
+										</span>
+									</c:if>
+									<c:if test="${atendimento.res == 'N'}">
+										<span class="red">
+											<i class="far fa-times-circle"></i>
+										</span>
+									</c:if>
+								</td>
+								<td>
+									<a class="btn purple-btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=show&id=${atendimento.id}'>Ver atendimento</a>
+									<c:if test="${atendimento.res == 'N' and login.tipoUsuario == 1}">
+										<a class="btn btn-danger btn-delete" href='${pageContext.request.contextPath}/AtendimentoServlet?action=delete&id=${atendimento.id}'>Deletar</a>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
+				<div>
+					<a class="btn btn-primary" href='${pageContext.request.contextPath}/portal.jsp'>Voltar para portal</a>
 				</div>
 			</div>
 		</div>

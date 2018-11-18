@@ -8,12 +8,12 @@
 	<title>Portal</title>
 </head>
 <body>
-	<c:if test="${login == null }">	
+	<c:if test="${ empty login }">	
 		<jsp:forward page="index.jsp"> 
 			<jsp:param name="msg" value="Usuario deve se autenticar para acessar o sistema" /> 
 		</jsp:forward> 
 	</c:if>
-	<c:if test="${login != null }">
+	<c:if test="${ not empty login }">
 		<%@ include file="sidebar.jsp" %>
 		<div class="content-container">
 			<div class="flex-container">

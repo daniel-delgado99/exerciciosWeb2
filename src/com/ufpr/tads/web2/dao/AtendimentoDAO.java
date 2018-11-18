@@ -5,12 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.ufpr.tads.web2.beans.Atendimento;
-import com.ufpr.tads.web2.beans.Cliente;
-import com.ufpr.tads.web2.beans.Funcionario;
 import com.ufpr.tads.web2.beans.TipoAtendimento;
+import com.ufpr.tads.web2.facade.AtendimentoFacade;
+import com.ufpr.tads.web2.facade.ProdutoFacade;
 import com.ufpr.tads.web2.facade.UsuarioFacade;
 
 public class AtendimentoDAO {
@@ -20,15 +21,14 @@ public class AtendimentoDAO {
 		PreparedStatement pst;
 		try {
 			pst = con.prepareStatement("INSERT INTO tb_atendimento"
-					+ "(dt_hr_atendimento, desc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_funcionario, id_cliente) "
-					+ "values (?, ?, ?, ?, ?, ?, ?);");
+					+ "(dt_hr_atendimento, desc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_cliente) "
+					+ "values (?, ?, ?, ?, ?, ?);");
 			pst.setString(1, a.getDataHora());
 			pst.setString(2, a.getDesc());
 			pst.setString(3, a.getRes());
 			pst.setInt(4, a.getProduto().getId());
 			pst.setInt(5, a.getTipoAtendimento().getId());
-			pst.setInt(6, a.getFuncionario().getId());
-			pst.setInt(7, a.getCliente().getId());
+			pst.setInt(6, a.getCliente().getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,10 +47,9 @@ public class AtendimentoDAO {
 				a.setDataHora(rs.getString("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
-				a.setProduto(ProdutoDAO.buscarProdutoPorId(Integer.parseInt(rs.getString("id_produto"))));
-				a.setTipoAtendimento(TipoAtendimentoDAO
-						.buscarTipoAtendimentoPorId(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
-				a.setFuncionario(UsuarioFacade.buscarFuncionario(Integer.parseInt(rs.getString("id_funcionario"))));
+				a.setSolucao(rs.getString("solucao_atendimento"));
+				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(rs.getString("id_produto"))));
+				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
 				a.setCliente(UsuarioFacade.buscarCliente(Integer.parseInt(rs.getString("id_cliente"))));
 
 				atendimentos.add(a);
@@ -60,6 +59,9 @@ public class AtendimentoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		//inverte a ordem do banco
+		Collections.reverse(atendimentos);
 		return atendimentos;
 	}
 
@@ -76,10 +78,9 @@ public class AtendimentoDAO {
 				a.setDataHora(rs.getString("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
-				a.setProduto(ProdutoDAO.buscarProdutoPorId(Integer.parseInt(rs.getString("id_produto"))));
-				a.setTipoAtendimento(TipoAtendimentoDAO
-						.buscarTipoAtendimentoPorId(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
-				a.setFuncionario(UsuarioFacade.buscarFuncionario(Integer.parseInt(rs.getString("id_funcionario"))));
+				a.setSolucao(rs.getString("solucao_atendimento"));
+				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(rs.getString("id_produto"))));
+				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
 				a.setCliente(UsuarioFacade.buscarCliente(Integer.parseInt(rs.getString("id_cliente"))));
 			}
 		} catch (SQLException e) {
@@ -87,20 +88,74 @@ public class AtendimentoDAO {
 		}
 		return a;
 	}
+	
+	public static List<Atendimento> buscarAtendimentosPorClienteId(int clienteId) {
+		PreparedStatement pst;
+		List<Atendimento> atendimentos = new ArrayList<Atendimento>();
+		try {
+			pst = con.prepareStatement("SELECT * FROM tb_atendimento WHERE id_cliente = ?;");
+			pst.setInt(1, clienteId);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Atendimento a = new Atendimento();
+				a.setId(rs.getInt("id_atendimento"));
+				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setDesc(rs.getString("desc_atendimento"));
+				a.setRes(rs.getString("res_atendimento"));
+				a.setSolucao(rs.getString("solucao_atendimento"));
+				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(rs.getString("id_produto"))));
+				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
+				a.setCliente(UsuarioFacade.buscarCliente(Integer.parseInt(rs.getString("id_cliente"))));
+
+				atendimentos.add(a);
+			}
+			rs.close();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//inverte a ordem do banco
+		Collections.reverse(atendimentos);
+		return atendimentos;
+	}
+	public static List<Atendimento> buscarAtendimentosEmAberto() {
+		PreparedStatement pst;
+		List<Atendimento> atendimentos = new ArrayList<Atendimento>();
+		try {
+			pst = con.prepareStatement("SELECT * FROM tb_atendimento WHERE res_atendimento = 'N';");
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Atendimento a = new Atendimento();
+				a.setId(rs.getInt("id_atendimento"));
+				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setDesc(rs.getString("desc_atendimento"));
+				a.setRes(rs.getString("res_atendimento"));
+				a.setSolucao(rs.getString("solucao_atendimento"));
+				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(rs.getString("id_produto"))));
+				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(rs.getString("id_tipo_atendimento"))));
+				a.setCliente(UsuarioFacade.buscarCliente(Integer.parseInt(rs.getString("id_cliente"))));
+
+				atendimentos.add(a);
+			}
+			rs.close();
+			pst.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//inverte a ordem do banco
+		Collections.reverse(atendimentos);
+		return atendimentos;
+	}
 
 	public static void alterarAtendimento(Atendimento a) {
 		PreparedStatement pst;
 		try {
-			pst = con.prepareStatement("UPDATE tb_atendimento SET " + "dt_hr_atendimento = ?, "
-					+ "desc_atendimento = ?, " + "res_atendimento = ?, " + "id_produto = ?, "
-					+ "id_tipo_atendimento = ?," + "id_usuario = ?," + "id_cliente = ?" + "WHERE id_produto = ?;");
-			pst.setString(1, a.getDataHora());
-			pst.setString(2, a.getDesc());
-			pst.setString(3, a.getRes());
-			pst.setInt(4, a.getProduto().getId());
-			pst.setInt(5, a.getTipoAtendimento().getId());
-			pst.setInt(6, a.getFuncionario().getId());
-			pst.setInt(7, a.getCliente().getId());
+			pst = con.prepareStatement("UPDATE tb_atendimento SET solucao_atendimento = ?, res_atendimento = ? WHERE id_atendimento = ?;");
+			pst.setString(1, a.getSolucao());
+			pst.setString(2, a.getRes());
+			pst.setInt(3, a.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

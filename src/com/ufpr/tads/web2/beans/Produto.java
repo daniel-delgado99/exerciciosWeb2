@@ -4,7 +4,7 @@ public class Produto {
 	private int id;
 	private String nome;
 	private String desc;
-	private double peso;
+	private int peso;
 	private CategoriaProduto categoriaProduto;
 
 	public Produto() {
@@ -34,11 +34,11 @@ public class Produto {
 		this.desc = desc;
 	}
 
-	public double getPeso() {
+	public int getPeso() {
 		return this.peso;
 	}
 
-	public void setPeso(double peso) {
+	public void setPeso(int peso) {
 		this.peso = peso;
 	}
 

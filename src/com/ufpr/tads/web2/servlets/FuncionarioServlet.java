@@ -11,10 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ufpr.tads.web2.beans.Atendimento;
 import com.ufpr.tads.web2.beans.Cidade;
 import com.ufpr.tads.web2.beans.Cliente;
+import com.ufpr.tads.web2.beans.Funcionario;
+import com.ufpr.tads.web2.beans.Produto;
+import com.ufpr.tads.web2.beans.TipoAtendimento;
 import com.ufpr.tads.web2.beans.Estado;
+import com.ufpr.tads.web2.facade.AtendimentoFacade;
 import com.ufpr.tads.web2.facade.CidadeEstadoFacade;
+import com.ufpr.tads.web2.facade.ProdutoFacade;
 import com.ufpr.tads.web2.facade.UsuarioFacade;
 
 @WebServlet("/FuncionarioServlet")
@@ -28,7 +34,7 @@ public class FuncionarioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("username") == null) {
+		if (session.getAttribute("login") == null || ((Funcionario) session.getAttribute("login")).getTipoUsuario().getId() != 2) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 			String msg = "Usuario deve se autenticar ao sistema";
 			try {
@@ -39,32 +45,32 @@ public class FuncionarioServlet extends HttpServlet {
 			}
 		} else {
 			String action = request.getParameter("action");
-			if (action == null || action == "" || action == "list") {
-				List<Cliente> clientes = UsuarioFacade.buscarTodosClientes();
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/clientesListar.jsp");
+			if (action == null || action == "" || action == "listarAtendimentos") {
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AtendimentoServlet");
 				try {
-					request.setAttribute("clientes", clientes);
 					dispatcher.forward(request, response);
 				} catch (ServletException | IOException e) {
 					e.printStackTrace();
 				}
-			} else if (action.equals("show")) {
+			} else if (action.equals("verAtendimento")) {
 				int id = Integer.parseInt(request.getParameter("id"));
-				Cliente c = (Cliente) UsuarioFacade.buscarUsuario(id);
-				List<Estado> estados = CidadeEstadoFacade.buscarTodosEstados();
-				List<Cidade> cidades = CidadeEstadoFacade.buscarTodosCidades();
-				RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesVisualizar.jsp");
+				Atendimento a = AtendimentoFacade.buscarAtendimento(id);
+				List<Produto> produtos = ProdutoFacade.buscarTodosProdutos();
+				List<TipoAtendimento> tiposAtendimento = AtendimentoFacade.buscarTodosTiposAtendimento();
+				List<Cliente> clientes = UsuarioFacade.buscarTodosClientes();
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/atendimentoDetalhes.jsp");
 				try {
-					request.setAttribute("cidades", cidades);
-					request.setAttribute("estados", estados);
-					request.setAttribute("cliente", c);
+					request.setAttribute("produtos", produtos);
+					request.setAttribute("tiposAtendimento", tiposAtendimento);
+					request.setAttribute("clientes", clientes);
+					request.setAttribute("atendimento", a);
 					rd.forward(request, response);
 				} catch (ServletException | IOException e) {
 					e.printStackTrace();
 				}
 			} else if (action.equals("formUpdate")) {
 				int id = Integer.parseInt(request.getParameter("id"));
-				Cliente c = (Cliente) UsuarioFacade.buscarUsuario(id);
+				Cliente c = UsuarioFacade.buscarCliente(id);
 				List<Estado> estados = CidadeEstadoFacade.buscarTodosEstados();
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientesForm.jsp");
 				try {

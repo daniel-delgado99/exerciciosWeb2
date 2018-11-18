@@ -5,12 +5,36 @@
 <html>
 	<div class="sidebar">
 		<div class="head">
-			<img class="logo" src="./css/icons/logo-purple.png">
+			<a href="${pageContext.request.contextPath}/portal.jsp">
+				<img class="logo" src="./css/icons/logo-purple.png" >
+			</a>
 		</div>
 		<div class="links">
-			<a class="btn" href='${pageContext.request.contextPath}/ClientesServlet'>Cadastro de clientes</a>
-			<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Atendimentos</a>
-			<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=formNew'>Efetuar atendimento</a>
+			<c:if test="${login.tipoUsuario == 1 }">
+				<a class="btn" href='#'>Alterar dados</a>
+				<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Meus atendimentos</a>
+				<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=formNew'>Solicitar atendimento</a>
+			</c:if>
+			<c:if test="${login.tipoUsuario == 2 }">
+				<a id="collapseButton" class="btn">Atendimentos</a>
+				<div id="collapsedItems" class="collapsed-items">
+					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Todos</a>
+					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=listAbertos'>Em aberto</a>				
+				</div>
+				<a class="btn" href='${pageContext.request.contextPath}/CategoriaServlet'>Cadastro de categorias</a>
+				<a class="btn" href='${pageContext.request.contextPath}/ProdutoServlet'>Cadastro de produtos</a>
+			</c:if>
+			<c:if test="${login.tipoUsuario == 3 }">
+				<a class="btn" href='#'>Cadastrar funcionário</a>
+				<a id="collapseButton" class="btn">Atendimentos</a>
+				<div id="collapsedItems" class="collapsed-items">
+					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet'>Todos</a>
+					<a class="btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=listAbertos'>Em aberto</a>				
+				</div>
+				<a class="btn" href='${pageContext.request.contextPath}/CategoriaServlet'>Cadastro de categorias</a>
+				<a class="btn" href='#'>Cadastro de produtos</a>
+				<a class="btn" href='#'>Relatórios</a>
+			</c:if>
 			<a class="btn" href='${pageContext.request.contextPath}/LogoutServlet'>Logout</a>
 		</div>
 	</div>

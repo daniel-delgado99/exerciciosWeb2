@@ -7,8 +7,10 @@ $(document).ready(function() {
     $("#cep").mask('00000-000');
     
     $("#dataHora").val(getCurrentDate());
-//    $("#dataHora").trigger('click');
-//    $("#dataHora").prop('disabled', true);
+    
+    $("#collapseButton").click(function() {
+        toggleButtons();
+    });
     
 });
 
@@ -35,4 +37,8 @@ function getCidades(){
             alert(request.status + ', Error: ' + request.statusText);
         }
     });
+}
+
+function toggleButtons() {
+	$("#collapsedItems").toggleClass('active');
 }

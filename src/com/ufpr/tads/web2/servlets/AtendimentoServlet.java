@@ -2,7 +2,6 @@ package com.ufpr.tads.web2.servlets;
 
 import java.io.IOException;
 import java.util.List;
-import java.lang.String;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +32,6 @@ public class AtendimentoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		// System.out.println(((LoginBean) session.getAttribute("login")).getTipoUsuario());
 		if (session.getAttribute("login") == null) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 			String msg = "Usuario deve se autenticar ao sistema";
@@ -46,9 +44,28 @@ public class AtendimentoServlet extends HttpServlet {
 		} else {
 			String action = request.getParameter("action");
 			if (action == null || action == "" || action == "list") {
-				List<Atendimento> atendimentos = AtendimentoFacade.buscarTodosAtendimentos();
+				List<Atendimento> atendimentos;
+				if (((LoginBean) session.getAttribute("login")).getTipoUsuario() != 1) {
+					atendimentos = AtendimentoFacade.buscarTodosAtendimentos();
+					request.setAttribute("title", "Atendimentos");
+				} else {
+					atendimentos = AtendimentoFacade.buscarAtendimentosPorCliente(((LoginBean) session.getAttribute("login")).getId());
+					request.setAttribute("title", "Meus atendimentos");
+				}
+				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/atendimentoListar.jsp");
 				try {
+					request.setAttribute("atendimentos", atendimentos);
+					dispatcher.forward(request, response);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+			} else if (action.equals("listAbertos")) {
+				List<Atendimento> atendimentos = AtendimentoFacade.buscarAtendimentosEmAberto();
+				
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/atendimentoListar.jsp");
+				try {
+					request.setAttribute("title", "Atendimentos em aberto");
 					request.setAttribute("atendimentos", atendimentos);
 					dispatcher.forward(request, response);
 				} catch (ServletException | IOException e) {
@@ -83,19 +100,31 @@ public class AtendimentoServlet extends HttpServlet {
 				} catch (ServletException | IOException e) {
 					e.printStackTrace();
 				}
+				
 
 			} else if (action.equals("new")) {
 				Atendimento a = new Atendimento();
 				a.setDataHora(request.getParameter("dtHr"));
-				a.setTipoAtendimento(AtendimentoFacade
-						.buscarTipoAtendimento(Integer.parseInt(request.getParameter("tipoAtendimento"))));
+				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(request.getParameter("tipoAtendimento"))));
 				a.setDesc(request.getParameter("desc"));
 				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(request.getParameter("produto"))));
 				a.setCliente(UsuarioFacade.buscarCliente(Integer.parseInt(request.getParameter("cliente"))));
-				a.setRes(request.getParameter("res"));
-				a.setFuncionario(UsuarioFacade.buscarFuncionario(Integer.parseInt(request.getParameter("funcionario"))));
+				a.setRes("N");
 
 				AtendimentoFacade.inserirAtendimento(a);
+
+				response.sendRedirect(request.getContextPath() + "/AtendimentoServlet");
+				
+			} else if (action.equals("updateAtendimento")) {
+				Atendimento a = new Atendimento();
+				a.setId(Integer.parseInt(request.getParameter("id")));
+				a.setSolucao(request.getParameter("solucao"));
+				a.setRes("S");
+				AtendimentoFacade.alterarAtendimento(a);
+
+				response.sendRedirect(request.getContextPath() + "/AtendimentoServlet");
+			} else if (action.equals("delete")) {				
+				AtendimentoFacade.removerAtendimento(Integer.parseInt(request.getParameter("id")));
 
 				response.sendRedirect(request.getContextPath() + "/AtendimentoServlet");
 			}
