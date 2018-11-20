@@ -19,14 +19,14 @@
 			<div class="flex-container">
 				<div class="purple-box login">
 					<div class="form-content">
-						<h4>INICIAR SESSAO</h4>
+						<h4>INICIAR SESSÃO</h4>
 						<form class="form-group" action="LoginServlet" method="POST">
-							Nome de usuario<input class="form-control purple-input" type="email" name="email"><br>
+							Email<input class="form-control purple-input" type="email" name="email"><br>
 							Senha<input class="form-control purple-input" type="password" name="senha"><br>
 							<c:if test="${msg != null }">	
 								<span style="color: red"><c:out value="${msg}"/></span>
 							</c:if>	
-							<button class="btn login-button" type="submit">Iniciar sessao</button><br>
+							<button class="btn login-button" type="submit">Login</button><br>
 						</form>
 					</div>
 					<div class="footer">

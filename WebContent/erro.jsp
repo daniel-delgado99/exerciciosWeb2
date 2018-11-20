@@ -14,15 +14,8 @@
 			<div class="col-md-12">
 				<h3 style='color: red'>Ocorreu um erro</h3>
 				<h3>Erro: ${pageContext.exception.message}</h3>
-				<!--  <p>Stack Trace: ${pageContext.out.flush()}
-								${pageContext.exception.printStackTrace(pageContext.response.writer)}
-				</p> -->
 				<div>
 					<a class="btn btn-primary" href='${pageContext.request.contextPath}/portal.jsp'>Inicio</a>
-				</div>
-				<div class="footer">
-					<p>Em caso de problemas, contatar o adminstrador.</p>
-					<p>${applicationScope['adminEmail']}</p>
 				</div>
 			</div>
 		</div>
