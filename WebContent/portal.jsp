@@ -16,9 +16,15 @@
 	<c:if test="${ not empty login }">
 		<%@ include file="sidebar.jsp" %>
 		<div class="content-container">
-			<div class="flex-container">
-				<h1>Portal</h1>
-			</div>
+			<h1 class="form-title">Sobre</h1>
+			<p>Miga, sua loka!</p>
+			<p>A BEIBE é uma empresa de embelezamento artificial voltada ao público jovem e adulto que quer fazer a diferença no mundo.</p>
+			<p>
+				A Embuste é a marca de beleza preferida dos brasileiros (Fonte: Embuste Estatística, 2018).
+				Todos os nossos produtos tocam sua beleza, é assim que a marca transforma momentos simples em momentos embusteiros há menos de 0 anos.
+			</p>
+			<p>Nosso objetivo é tornar o mundo cada vez mais belo e embusteiro, e as pessoas mais felizes.</p>
+			<p class="slogan">E ai, vamos ficar lindas?</p>
 		</div>
     </c:if>
 </body>

@@ -1,8 +1,11 @@
 package com.ufpr.tads.web2.beans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Atendimento {
 	private int id;
-	private String dataHora;
+	private Date dataHora;
 	private String desc;
 	private String res;
 	private Produto produto;
@@ -21,11 +24,11 @@ public class Atendimento {
 		this.id = id;
 	}
 
-	public String getDataHora() {
+	public Date getDataHora() {
 		return dataHora;
 	}
 
-	public void setDataHora(String dataHora) {
+	public void setDataHora(Date dataHora) {
 		this.dataHora = dataHora;
 	}
 
@@ -60,7 +63,6 @@ public class Atendimento {
 	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
 		this.tipoAtendimento = tipoAtendimento;
 	}
-
 
 	public Cliente getCliente() {
 		return cliente;

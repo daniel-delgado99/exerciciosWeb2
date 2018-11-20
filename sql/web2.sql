@@ -14,28 +14,13 @@ nome_usuario varchar(100),
 cpf_usuario char(14) unique,
 email_usuario varchar(100) unique,
 senha_usuario varchar(50),
-data_usuario datetime, -- corrigir no java
+data_usuario date,
 rua_usuario varchar(100),
 nr_usuario integer,
 cep_usuario char(10),
 id_cidade int,
 id_tipo_usuario int
 );
-
--- create table tb_cliente (
--- id_cliente int primary key AUTO_INCREMENT,
--- id_usuario int
--- );
-
--- create table tb_funcionario (
--- id_funcionario int primary key AUTO_INCREMENT,
--- id_usuario int
--- );
-
--- create table tb_gerente (
--- id_gerente int primary key AUTO_INCREMENT,
--- id_usuario int
--- );
 
 create table tb_cidade(
 id_cidade int primary key AUTO_INCREMENT,
@@ -69,7 +54,7 @@ nome_tipo_atendimento varchar(50)
 
 create table tb_atendimento (
 id_atendimento int primary key AUTO_INCREMENT,
-dt_hr_atendimento char(20),
+dt_hr_atendimento datetime,
 desc_atendimento varchar(255),
 res_atendimento char(1),
 solucao_atendimento varchar(255),
@@ -80,10 +65,6 @@ id_cliente int
 
 -- Alter tables
 ALTER TABLE tb_usuario ADD FOREIGN KEY (id_tipo_usuario) REFERENCES tb_tipo_usuario(id_tipo_usuario);
-
--- ALTER TABLE tb_cliente ADD FOREIGN KEY (id_usuario) REFERENCES tb_usuario(id_usuario);
--- ALTER TABLE tb_funcionario ADD FOREIGN KEY (id_usuario) REFERENCES tb_usuario(id_usuario);
--- ALTER TABLE tb_gerente ADD FOREIGN KEY (id_usuario) REFERENCES tb_usuario(id_usuario);
 
 ALTER TABLE tb_usuario ADD FOREIGN KEY (id_cidade) REFERENCES tb_cidade(id_cidade);
 ALTER TABLE tb_cidade ADD FOREIGN KEY (id_estado) REFERENCES tb_estado(id_estado);
@@ -160,28 +141,41 @@ insert into tb_usuario (
     senha_usuario, data_usuario, rua_usuario, nr_usuario,
     cep_usuario, id_cidade, id_tipo_usuario
 ) values 
-("12345678910", "Braian Viana",     "braian@braian",    "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678911", "Daniel Delgado",   "daniel@daniel",    "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
-("12345678912", "Gustavo Lara",     "gustavo@gustavo",  "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3),
-("12345678913", "Matheus Fernandes","matheus@matheus",  "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678914", "Rafael Damiani",   "rafael@rafael",    "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
-("12345678915", "Joao Silva",       "joao@joao",        "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3),
-("12345678916", "Maria Souza",      "maria@maria",      "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678917", "Jose Carlos",      "jose@jose",        "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
-("12345678918", "Geraldo Martins",  "geraldo@geraldo",  "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3),
-("12345678919", "Outro nome",       "outro@outro",      "senha", "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678920", "Poderoso A",       "a@a",              "a",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 1),
-("12345678921", "Poderoso B",       "b@b",              "b",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 2),
-("12345678922", "Poderoso C",       "c@c",              "c",     "2018-01-01 00:00", "Rua 1", 1, "8000000", 1, 3);
+("123.456.789-10", "Braian Viana",     "braian@braian",    "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 1),
+("123.456.789-11", "Daniel Delgado",   "daniel@daniel",    "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 2),
+("123.456.789-12", "Gustavo Lara",     "gustavo@gustavo",  "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 3),
+("123.456.789-13", "Matheus Fernandes","matheus@matheus",  "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 1),
+("123.456.789-14", "Rafael Damiani",   "rafael@rafael",    "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 2),
+("123.456.789-15", "Joao Silva",       "joao@joao",        "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 3),
+("123.456.789-16", "Maria Souza",      "maria@maria",      "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 1),
+("123.456.789-17", "Jose Carlos",      "jose@jose",        "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 2),
+("123.456.789-18", "Geraldo Martins",  "geraldo@geraldo",  "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 3),
+("123.456.789-19", "Outro nome",       "outro@outro",      "E8D95A51F3AF4A3B134BF6BB680A213A", "2018-01-01", "Rua 1", 1, "8000-000", 1, 1),
+("123.456.789-20", "Poderoso A",       "a@a",              "0CC175B9C0F1B6A831C399E269772661", "2018-01-01", "Rua 1", 1, "8000-000", 1, 1),
+("123.456.789-21", "Poderoso B",       "b@b",              "92EB5FFEE6AE2FEC3AD71C777531578F", "2018-01-01", "Rua 1", 1, "8000-000", 1, 2),
+("123.456.789-22", "Poderoso C",       "c@c",              "4A8A08F09D37B73795649038408B5F33", "2018-01-01", "Rua 1", 1, "8000-000", 1, 3);
 
 insert into tb_atendimento(dt_hr_atendimento, desc_atendimento, res_atendimento, solucao_atendimento, id_produto, id_tipo_atendimento, id_cliente) values
 ('2018-01-01 12:00:00', "Um atendimento muito legal", 'S', "Obrigado", 1, 3, 1),
-('2018-01-01 12:00:00', "Não gostei, achei meio bosta", 'S', "Ninguém liga pra sua opinião", 4, 1, 4),
+('2018-01-01 12:00:00', "Não gostei, achei meio ruim", 'S', "Ninguém liga pra sua opinião", 4, 1, 4),
 ('2018-01-01 12:00:00', "Acho que vcs podiam fazer outra coisa", 'S', "Quem sabe um dia", 6, 2, 7),
 ('2018-01-01 12:00:00', "Oq vcs fazem?", 'N', null, 3, 4, 10);
 
 -- select * from tb_categoria_produto;
 -- select * from tb_produto;
-select * from tb_usuario;
+-- select * from tb_usuario;
 -- select * from tb_cidade;
 -- select * from tb_atendimento;
+
+-- relatorio produtos mais reclamados
+-- select p.nome_produto, count(p.id_produto) as qtd 
+-- from tb_atendimento as a join tb_produto as p on p.id_produto = a.id_produto where a.id_tipo_atendimento = 1
+-- group by p.id_produto order by count(p.id_produto) desc limit 3;
+
+-- relatorio atendimentos em aberto
+-- select a.dt_hr_atendimento, u.nome_usuario, u.cpf_usuario, u.email_usuario, a.desc_atendimento
+-- from tb_atendimento as a inner join tb_usuario as u on a.id_cliente = u.id_usuario where res_atendimento = 'N';
+-- and dt_hr_atendimento > xxxxxxx
+
+-- relatorio reclamações
+-- select dt_hr_atendimento, desc_atendimento, res_atendimento, solucao_atendimento from tb_atendimento where id_tipo_atendimento = 1 order by res_atendimento;

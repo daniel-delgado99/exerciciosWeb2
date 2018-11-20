@@ -1,5 +1,7 @@
 package com.ufpr.tads.web2.beans;
 
+import java.util.Date;
+
 public class Usuario {
     private int id;
     private String login;
@@ -7,7 +9,7 @@ public class Usuario {
     private String cpf;
     private String nome;
     private String email;
-    private String data;
+    private Date data;
     private String rua;
     private int nr;
     private String cep;
@@ -65,11 +67,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getData() {
+    public Date getData() {
         return this.data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

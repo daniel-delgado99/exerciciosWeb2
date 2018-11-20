@@ -34,8 +34,28 @@ public class LoginServlet extends HttpServlet {
         
         LoginBean loginBean = LoginFacade.efetuarLogin(email, senha);
         if (loginBean != null) {
-        	this.setSession(request, loginBean);        	
-        	this.redirectToPortal(request, response);
+        	this.setSession(request, loginBean);    
+        	String page = "";
+        	
+        	switch (loginBean.getTipoUsuario()) {
+        		case 1:
+        			page = "/AtendimentoServlet";
+        			break;
+        		case 2:
+        			page = "/AtendimentoServlet?action=listAbertos";
+        			break;
+        		case 3:
+        			page = "/RelatoriosServlet";
+        			break;
+        		default:
+        			page = "/index.jsp";
+        			break;
+        	}
+        	try {
+    			response.sendRedirect(request.getContextPath() + page);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
         } else {
         	this.redirectToError(request, response);
         }
@@ -50,14 +70,6 @@ public class LoginServlet extends HttpServlet {
         	request.setAttribute("page", page);
 			dispatcher.forward(request,response);
 		} catch (ServletException | IOException e) {
-			e.printStackTrace();
-		}
-    }
-    
-    public void redirectToPortal(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			response.sendRedirect(request.getContextPath() + "/portal.jsp");
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
     }

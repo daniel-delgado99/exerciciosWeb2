@@ -39,7 +39,7 @@
 							<th>Categoria</th>
 							<th>Descrição</th>
 							<th>Peso (g)</th>
-							<th class="action">Acoes</th>
+							<th class="action">Ações</th>
 						</tr>
 						<c:forEach items="${produtos}" var="produto">
 							<tr>
@@ -50,7 +50,8 @@
 								<td>
 									<a class="btn purple-btn" href='${pageContext.request.contextPath}/ProdutoServlet?action=show&id=${produto.id}'><i class="far fa-eye"></i></a>
 									<a class="btn btn-warning" href='${pageContext.request.contextPath}/ProdutoServlet?action=formUpdate&id=${produto.id}'><i class="far fa-edit"></i></a>
-									<a class="btn btn-danger" href='${pageContext.request.contextPath}/ProdutoServlet?action=remove&id=${produto.id}'><i class="fas fa-trash"></i></a>
+									<a class="btn btn-danger" href='${pageContext.request.contextPath}/ProdutoServlet?action=remove&id=${produto.id}'
+									onclick="return confirm('Deseja realmente excluir esse produto? Isso excluirá todos os atendimentos associados a ele');"><i class="fas fa-trash"></i></a>
 								</td>
 							</tr>
 						</c:forEach>

@@ -1,6 +1,8 @@
 package com.ufpr.tads.web2.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.ufpr.tads.web2.beans.Cidade;
 import com.ufpr.tads.web2.beans.Cliente;
 import com.ufpr.tads.web2.beans.Estado;
+import com.ufpr.tads.web2.beans.LoginBean;
 import com.ufpr.tads.web2.beans.Funcionario;
 import com.ufpr.tads.web2.beans.Gerente;
 import com.ufpr.tads.web2.beans.Usuario;
@@ -24,6 +27,7 @@ import com.ufpr.tads.web2.facade.UsuarioFacade;
 @WebServlet("/UsuarioServlet")
 public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	public UsuarioServlet() {
 		super();
@@ -49,7 +53,11 @@ public class UsuarioServlet extends HttpServlet {
 			u.setEmail(request.getParameter("email"));
 			u.setSenha(request.getParameter("senha"));
 			u.setTipoUsuario(UsuarioFacade.buscarTipoUsuario(Integer.parseInt(request.getParameter("tipoUsuario"))));
-			u.setData(request.getParameter("data"));
+			try {
+				u.setData(format.parse(request.getParameter("data")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			u.setRua(request.getParameter("rua"));
 			u.setNr(Integer.parseInt(request.getParameter("nr")));
 			u.setCep(request.getParameter("cep"));
@@ -57,7 +65,7 @@ public class UsuarioServlet extends HttpServlet {
 
 			UsuarioFacade.inserirUsuario(u);
 			
-			if (session.getAttribute("login") == null) {
+			if (session.getAttribute("login") == null || ((LoginBean) session.getAttribute("login")).getId() == 1) {
 				response.sendRedirect(request.getContextPath() + "/index.jsp");
 			} else {
 				response.sendRedirect(request.getContextPath() + "/UsuarioServlet");
@@ -75,21 +83,30 @@ public class UsuarioServlet extends HttpServlet {
 				}
 			} else {
 				if (action == null || action == "" || action == "list") {
-					List<Funcionario> funcionarios =  UsuarioFacade.buscarTodosFuncionarios();
-					List<Gerente> gerentes =  UsuarioFacade.buscarTodosGerentes();
-					List<Usuario> usuarios = new ArrayList<Usuario>();
-					for (Funcionario f : funcionarios) {
-						usuarios.add(f);
-					}
-					for (Gerente g : gerentes) {
-						usuarios.add(g);
-					}
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/usuarioListar.jsp");
-					try {
-						request.setAttribute("usuarios", usuarios);
-						dispatcher.forward(request, response);
-					} catch (ServletException | IOException e) {
-						e.printStackTrace();
+					if (((LoginBean) session.getAttribute("login")).getTipoUsuario() == 3) {	
+						List<Funcionario> funcionarios =  UsuarioFacade.buscarTodosFuncionarios();
+						List<Gerente> gerentes =  UsuarioFacade.buscarTodosGerentes();
+						List<Usuario> usuarios = new ArrayList<Usuario>();
+						for (Funcionario f : funcionarios) {
+							usuarios.add(f);
+						}
+						for (Gerente g : gerentes) {
+							usuarios.add(g);
+						}
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/usuarioListar.jsp");
+						try {
+							request.setAttribute("usuarios", usuarios);
+							dispatcher.forward(request, response);
+						} catch (ServletException | IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/portal.jsp");
+						try {
+							dispatcher.forward(request, response);
+						} catch (ServletException | IOException e) {
+							e.printStackTrace();
+						}
 					}
 				} else if (action.equals("show")) {
 					int id = Integer.parseInt(request.getParameter("id"));
@@ -133,7 +150,11 @@ public class UsuarioServlet extends HttpServlet {
 					u.setNome(request.getParameter("nome"));
 					u.setEmail(request.getParameter("email"));
 					u.setTipoUsuario(UsuarioFacade.buscarTipoUsuario(Integer.parseInt(request.getParameter("tipoUsuario"))));
-					u.setData(request.getParameter("data"));
+					try {
+						u.setData(format.parse(request.getParameter("data")));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 					u.setRua(request.getParameter("rua"));
 					u.setNr(Integer.parseInt(request.getParameter("nr")));
 					u.setCep(request.getParameter("cep"));

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.ufpr.tads.web2.servlets.Criptografia;
 import com.ufpr.tads.web2.beans.LoginBean;
 
 public class LoginDAO {
@@ -23,8 +24,7 @@ public class LoginDAO {
 	        String senhaBD = rs.getString("senha_usuario");
 	        int tipoUsuario = rs.getInt("id_tipo_usuario");
 	        
-	        if (senha.equals(senhaBD)) {
-	        	// aqui em cima checar criptografia
+	        if (Criptografia.criptografar(senha).equals(senhaBD)) {
 	        	loginBean = new LoginBean();
 	        	loginBean.setId(id);
 	        	loginBean.setNome(nome);

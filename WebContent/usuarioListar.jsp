@@ -18,7 +18,7 @@
 		<div class="content-container">
 			<div class="row">
 				<div class="col-md-10">
-					<h1>Usuarios cadastrados</h1>
+					<h1>Usuários cadastrados</h1>
 				</div>
 				<div class="col-md-2">
 					<a class="btn btn-success btn-new" href="${pageContext.request.contextPath}/UsuarioServlet?action=formNew">Novo</a>
@@ -36,7 +36,7 @@
 						<th>Cpf</th>
 						<th>Nome</th>
 						<th>Email</th>
-						<th>Acoes</th>
+						<th>Ações</th>
 					</tr>
 					<c:forEach items="${usuarios}" var="usuario">
 						<tr>

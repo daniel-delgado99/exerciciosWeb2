@@ -16,7 +16,7 @@
 	<c:if test="${not empty login}">
 		<%@ include file="sidebar.jsp" %>
 		<div class="content-container">
-			<form class="" action="${not empty usuario ? 'UsuarioServlet?action=update' : 'UsuarioServlet?action=new'}" method="post" class="form-group">
+			<form class="" onsubmit="return validaForm()" action="${not empty usuario ? 'UsuarioServlet?action=update' : 'UsuarioServlet?action=new'}" method="post" class="form-group">
 				<c:if test="${not empty usuario}">
 					<input type="hidden" name="id" value="${usuario.id}"/>
 					<h2 class="form-title">Alterar usuário</h2>
@@ -36,8 +36,11 @@
 					<div class="col-md-6">
 						Email <input type="email" name="email" value="${not empty usuario ? usuario.email : ''}" ${not empty usuario ? 'disabled' : ''} class="form-control" required/>
 					</div>
+					
+					<fmt:formatDate pattern="yyyy-MM-dd" value="${usuario.data}" var="dataFormatada"/>
+
 					<div class="col-md-6">
-						Data <input type="date" name="data" value="${not empty usuario ? usuario.data : ''}" class="form-control" required/>
+						Data de nascimento <input type="date" name="data" value="${dataFormatada}" class="form-control" required/>
 					</div>
 				</div>
 				<c:if test="${empty usuario}">
@@ -52,7 +55,7 @@
 					<div class="col-md-12">
 						Tipo de Usuário
 						<select name="tipoUsuario" ${not empty usuario && usuario.id == login.id ? 'disabled' : ''} class="form-control">
-							<option value="" selected disabled>Selecione um tipo de usuario</option>
+							<option value="" disabled>Selecione um tipo de usuario</option>
 							<option value="2" ${not empty usuario && usuario.tipoUsuario.id == 2 ? 'selected' : ''}>Funcionario</option>
 							<option value="3" ${not empty usuario && usuario.tipoUsuario.id == 3 ? 'selected' : ''}>Gerente</option>
 						</select>
@@ -68,7 +71,7 @@
 						Rua <input type="text" name="rua" value="${not empty usuario ? usuario.rua : ''}" class="form-control" required/>
 					</div>
 					<div class="col-md-2">
-						Numero <input type="number" name="nr" value="${not empty usuario ? usuario.nr : ''}" class="form-control" required/>
+						Número <input type="number" name="nr" value="${not empty usuario ? usuario.nr : ''}" class="form-control" required/>
 					</div>
 					<div class="col-md-4">
 						CEP <input type="text" name="cep" id="cep" value="${not empty usuario ? usuario.cep : ''}" class="form-control" required/>

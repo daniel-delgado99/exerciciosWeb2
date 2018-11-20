@@ -1,6 +1,8 @@
 package com.ufpr.tads.web2.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.ufpr.tads.web2.beans.Atendimento;
 import com.ufpr.tads.web2.beans.Cliente;
-import com.ufpr.tads.web2.beans.Funcionario;
 import com.ufpr.tads.web2.beans.LoginBean;
 import com.ufpr.tads.web2.beans.Produto;
 import com.ufpr.tads.web2.beans.TipoAtendimento;
@@ -24,6 +25,7 @@ import com.ufpr.tads.web2.facade.UsuarioFacade;
 @WebServlet("/AtendimentoServlet")
 public class AtendimentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 	public AtendimentoServlet() {
 		super();
@@ -104,7 +106,11 @@ public class AtendimentoServlet extends HttpServlet {
 
 			} else if (action.equals("new")) {
 				Atendimento a = new Atendimento();
-				a.setDataHora(request.getParameter("dtHr"));
+				try {
+					a.setDataHora(format.parse(request.getParameter("dtHr")));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				a.setTipoAtendimento(AtendimentoFacade.buscarTipoAtendimento(Integer.parseInt(request.getParameter("tipoAtendimento"))));
 				a.setDesc(request.getParameter("desc"));
 				a.setProduto(ProdutoFacade.buscarProduto(Integer.parseInt(request.getParameter("produto"))));

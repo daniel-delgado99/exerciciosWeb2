@@ -29,7 +29,7 @@
 						<div class="col-md-6">
 							Tipo de atendimento
 							<select name="tipoAtendimento" class="form-control">
-								<option value="" selected disabled>Selecione um tipo</option>
+								<option value="" disabled>Selecione um tipo</option>
 								<c:forEach items="${tiposAtendimento}" var="tipo">
 									<option value="${tipo.id}">${tipo.nome}</option>
 								</c:forEach>
@@ -39,7 +39,7 @@
 						<div class="col-md-6">
 							Produto
 							<select name="produto" class="form-control">
-								<option value="" selected disabled>Selecione um produto</option>
+								<option value="" disabled>Selecione um produto</option>
 								<c:forEach items="${produtos}" var="produto">
 									<option value="${produto.id}">${produto.nome}</option>
 								</c:forEach>

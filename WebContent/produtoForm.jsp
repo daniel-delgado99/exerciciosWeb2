@@ -37,7 +37,7 @@
 						<div class="col-md-6">
 							Categoria
 							<select name="categoria" class="form-control">
-								<option value="" selected disabled>Selecione uma categoria</option>
+								<option value="" disabled>Selecione uma categoria</option>
 								<c:forEach items="${categorias}" var="categoria">
 									<option value="${categoria.id}" ${not empty produto && produto.categoriaProduto.id == categoria.id ? 'selected' : ''}><c:out value="${categoria.nome}"/></option>
 								</c:forEach>

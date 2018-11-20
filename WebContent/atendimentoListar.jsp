@@ -42,11 +42,11 @@
 								<th>Nome do cliente</th>
 							</c:if>
 							<th>Resolvido</th>
-							<th class="action">Acoes</th>
+							<th class="action">Ações</th>
 						</tr>
 						<c:forEach items="${atendimentos}" var="atendimento">
 							<tr>
-								<td><c:out value="${atendimento.dataHora}"/></td>
+								<td><fmt:formatDate pattern="dd/MM/yyyy H:mm" value="${atendimento.dataHora}"/></td>
 								<td><c:out value="${atendimento.desc}"/></td>
 								<td><c:out value="${atendimento.produto.nome}"/></td>
 								<c:if test="${login.tipoUsuario != 1}">
@@ -65,9 +65,17 @@
 									</c:if>
 								</td>
 								<td>
-									<a class="btn purple-btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=show&id=${atendimento.id}'>Ver atendimento</a>
+									<a class="btn purple-btn" href='${pageContext.request.contextPath}/AtendimentoServlet?action=show&id=${atendimento.id}'>
+										<c:if test="${atendimento.res == 'S'}">
+											Ver atendimento
+										</c:if>
+										<c:if test="${atendimento.res == 'N'}">
+											Resolver atendimento
+										</c:if>
+									</a>
 									<c:if test="${atendimento.res == 'N' and login.tipoUsuario == 1}">
-										<a class="btn btn-danger btn-delete" href='${pageContext.request.contextPath}/AtendimentoServlet?action=delete&id=${atendimento.id}'>Deletar</a>
+										<a class="btn btn-danger btn-delete" href='${pageContext.request.contextPath}/AtendimentoServlet?action=delete&id=${atendimento.id}' 
+										onclick="return confirm('Deseja realmente excluir esse atendimento?');">Deletar</a>
 									</c:if>
 								</td>
 							</tr>

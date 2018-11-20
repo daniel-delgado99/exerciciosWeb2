@@ -8,7 +8,9 @@
 .form-title {
 	margin: 10px 0 20px;
 }
-
+.fw-400 {
+	font-weight: 400;
+}
 .purple-box {
     width: 600px;
     padding: 25px;
@@ -101,7 +103,7 @@
 }
 .sidebar .head {
     width: 100%;
-    padding: 30px;
+    padding: 20px;
     text-align: center;
 }
 .collapsed-items {
@@ -136,6 +138,27 @@
 @font-face {
     font-family: 'Daddy Girl';
     src: url('./fonts/daddysgirl.ttf');
+}
+
+.logo-text {
+	font-family: 'Daddy Girl';
+	color: #fff !important;
+	text-decoration: none !important;
+}
+.logo-text .logo-header {	
+	font-size: 30px;
+	margin-bottom: 0;
+}
+.logo-text .logo-subheader {
+	font-size: 20px;
+}
+
+.slogan {
+	text-align: center;
+    padding: 50px;
+    color: #976dcf;
+    font-family: "Daddy Girl";
+    font-size: 80px;
 }
 
 .green {

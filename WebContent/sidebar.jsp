@@ -5,8 +5,10 @@
 <html>
 	<div class="sidebar">
 		<div class="head">
-			<a href="${pageContext.request.contextPath}/portal.jsp">
-				<img class="logo" src="./css/icons/logo-purple.png" >
+			<a class="logo-text" href="${pageContext.request.contextPath}/portal.jsp">
+				<p class="logo-header">beibe</p>
+					<img class="logo" src="./css/icons/logo-purple.png" >
+				<p class="logo-subheader">embelezamento artificial</p>
 			</a>
 		</div>
 		<div class="links">

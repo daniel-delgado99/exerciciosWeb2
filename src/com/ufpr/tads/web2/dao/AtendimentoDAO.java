@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,14 +18,14 @@ import com.ufpr.tads.web2.facade.UsuarioFacade;
 
 public class AtendimentoDAO {
 	static Connection con = ConnectionFactory.getConnectionFactory().getConnection();
-
+	
 	public static void insertAtendimento(Atendimento a) {
 		PreparedStatement pst;
 		try {
 			pst = con.prepareStatement("INSERT INTO tb_atendimento"
 					+ "(dt_hr_atendimento, desc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_cliente) "
 					+ "values (?, ?, ?, ?, ?, ?);");
-			pst.setString(1, a.getDataHora());
+			pst.setTimestamp(1, new java.sql.Timestamp(a.getDataHora().getTime()));
 			pst.setString(2, a.getDesc());
 			pst.setString(3, a.getRes());
 			pst.setInt(4, a.getProduto().getId());
@@ -43,8 +45,8 @@ public class AtendimentoDAO {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				Atendimento a = new Atendimento();
-				a.setId(rs.getInt("id_atendimento"));
-				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setId(rs.getInt("id_atendimento"));				
+				a.setDataHora(rs.getTimestamp("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
 				a.setSolucao(rs.getString("solucao_atendimento"));
@@ -75,7 +77,7 @@ public class AtendimentoDAO {
 
 			while (rs.next()) {
 				a.setId(rs.getInt("id_atendimento"));
-				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setDataHora(rs.getTimestamp("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
 				a.setSolucao(rs.getString("solucao_atendimento"));
@@ -99,7 +101,7 @@ public class AtendimentoDAO {
 			while (rs.next()) {
 				Atendimento a = new Atendimento();
 				a.setId(rs.getInt("id_atendimento"));
-				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setDataHora(rs.getTimestamp("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
 				a.setSolucao(rs.getString("solucao_atendimento"));
@@ -128,7 +130,7 @@ public class AtendimentoDAO {
 			while (rs.next()) {
 				Atendimento a = new Atendimento();
 				a.setId(rs.getInt("id_atendimento"));
-				a.setDataHora(rs.getString("dt_hr_atendimento"));
+				a.setDataHora(rs.getTimestamp("dt_hr_atendimento"));
 				a.setDesc(rs.getString("desc_atendimento"));
 				a.setRes(rs.getString("res_atendimento"));
 				a.setSolucao(rs.getString("solucao_atendimento"));

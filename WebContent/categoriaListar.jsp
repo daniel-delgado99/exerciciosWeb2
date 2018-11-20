@@ -40,7 +40,8 @@
 								<td><c:out value="${ categoria.nome }"/></td>
 								<td>
 									<a class="btn btn-warning" href='${pageContext.request.contextPath}/CategoriaServlet?action=formUpdate&id=${categoria.id}'><i class="far fa-edit"></i></a>
-									<a class="btn btn-danger" href='${pageContext.request.contextPath}/CategoriaServlet?action=remove&id=${categoria.id}'><i class="fas fa-trash"></i></a>
+									<a class="btn btn-danger" href='${pageContext.request.contextPath}/CategoriaServlet?action=remove&id=${categoria.id}'
+									onclick="return confirm('Deseja realmente excluir essa categoria? Isso excluirá todos os produtos associados a ela');"><i class="fas fa-trash"></i></a>
 								</td>
 							</tr>
 						</c:forEach>

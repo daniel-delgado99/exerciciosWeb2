@@ -31,8 +31,10 @@
 					<div class="col-md-6">
 						Email <input type="email" name="email" class="form-control"  value="${usuario.email}" disabled/>
 					</div>
+					
+					<fmt:formatDate pattern="dd/MM/yyyy" value="${usuario.data}" var="dataFormatada"/>
 					<div class="col-md-6">
-						Data <input type="text" name="data" class="form-control" value="${usuario.data}" disabled/>
+						Data <input type="text" name="data" class="form-control" value="${dataFormatada}" disabled/>
 					</div>
 				</div>
 				<div class="row">

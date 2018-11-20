@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,9 +15,11 @@ import com.ufpr.tads.web2.beans.Funcionario;
 import com.ufpr.tads.web2.beans.Gerente;
 import com.ufpr.tads.web2.facade.CidadeEstadoFacade;
 import com.ufpr.tads.web2.facade.UsuarioFacade;
+import com.ufpr.tads.web2.servlets.Criptografia;
 
 public class UsuarioDAO {
 	static Connection con = ConnectionFactory.getConnectionFactory().getConnection();
+	static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static void insertUsuario(Usuario u) {
 		PreparedStatement pst;
@@ -29,8 +33,8 @@ public class UsuarioDAO {
 			pst.setString(1, u.getCpf());
 			pst.setString(2, u.getNome());
 			pst.setString(3, u.getEmail());
-			pst.setString(4, u.getSenha());
-			pst.setString(5, u.getData());
+			pst.setString(4, Criptografia.criptografar(u.getSenha()));
+			pst.setDate(5, new java.sql.Date(u.getData().getTime()));
 			pst.setString(6, u.getRua());
 			pst.setInt(7, u.getNr());
 			pst.setString(8, u.getCep());
@@ -57,7 +61,7 @@ public class UsuarioDAO {
 				u.setNome(rs.getString("nome_usuario"));
 				u.setEmail(rs.getString("email_usuario"));
 				u.setSenha(rs.getString("senha_usuario"));
-				u.setData(rs.getString("data_usuario"));
+				u.setData(rs.getTimestamp("data_usuario"));
 				u.setRua(rs.getString("rua_usuario"));
 				u.setNr(rs.getInt("nr_usuario"));
 				u.setCep(rs.getString("cep_usuario"));
@@ -83,7 +87,7 @@ public class UsuarioDAO {
 				u.setNome(rs.getString("nome_usuario"));
 				u.setEmail(rs.getString("email_usuario"));
 				u.setSenha(rs.getString("senha_usuario"));
-				u.setData(rs.getString("data_usuario"));
+				u.setData(rs.getTimestamp("data_usuario"));
 				u.setRua(rs.getString("rua_usuario"));
 				u.setNr(rs.getInt("nr_usuario"));
 				u.setCep(rs.getString("cep_usuario"));
@@ -100,19 +104,19 @@ public class UsuarioDAO {
 		return usuarios;
 	}
 
-	public static void alterarUsuario(Usuario c) {
+	public static void alterarUsuario(Usuario u) {
 		PreparedStatement pst;
 		try {
 			pst = con.prepareStatement("UPDATE tb_usuario SET nome_usuario = ?, data_usuario = ?, rua_usuario = ?, "
 					+ "nr_usuario = ?,  cep_usuario = ?, id_cidade = ?,  id_tipo_usuario = ? WHERE id_usuario = ?;");
-			pst.setString(1, c.getNome());
-			pst.setString(2, c.getData());
-			pst.setString(3, c.getRua());
-			pst.setInt(4, c.getNr());
-			pst.setString(5, c.getCep());
-			pst.setInt(6, c.getCidade().getId());
-			pst.setInt(7, c.getTipoUsuario().getId());
-			pst.setInt(8, c.getId());
+			pst.setString(1, u.getNome());
+			pst.setDate(2, new java.sql.Date(u.getData().getTime()));
+			pst.setString(3, u.getRua());
+			pst.setInt(4, u.getNr());
+			pst.setString(5, u.getCep());
+			pst.setInt(6, u.getCidade().getId());
+			pst.setInt(7, u.getTipoUsuario().getId());
+			pst.setInt(8, u.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -143,7 +147,7 @@ public class UsuarioDAO {
 				c.setNome(rs.getString("nome_usuario"));
 				c.setEmail(rs.getString("email_usuario"));
 				c.setSenha(rs.getString("senha_usuario"));
-				c.setData(rs.getString("data_usuario"));
+				c.setData(rs.getTimestamp("data_usuario"));
 				c.setRua(rs.getString("rua_usuario"));
 				c.setNr(rs.getInt("nr_usuario"));
 				c.setCep(rs.getString("cep_usuario"));
@@ -174,7 +178,7 @@ public class UsuarioDAO {
 				c.setNome(rs.getString("nome_usuario"));
 				c.setEmail(rs.getString("email_usuario"));
 				c.setSenha(rs.getString("senha_usuario"));
-				c.setData(rs.getString("data_usuario"));
+				c.setData(rs.getTimestamp("data_usuario"));
 				c.setRua(rs.getString("rua_usuario"));
 				c.setNr(rs.getInt("nr_usuario"));
 				c.setCep(rs.getString("cep_usuario"));
@@ -200,7 +204,7 @@ public class UsuarioDAO {
 				f.setNome(rs.getString("nome_usuario"));
 				f.setEmail(rs.getString("email_usuario"));
 				f.setSenha(rs.getString("senha_usuario"));
-				f.setData(rs.getString("data_usuario"));
+				f.setData(rs.getTimestamp("data_usuario"));
 				f.setRua(rs.getString("rua_usuario"));
 				f.setNr(rs.getInt("nr_usuario"));
 				f.setCep(rs.getString("cep_usuario"));
@@ -231,7 +235,7 @@ public class UsuarioDAO {
 				f.setNome(rs.getString("nome_usuario"));
 				f.setEmail(rs.getString("email_usuario"));
 				f.setSenha(rs.getString("senha_usuario"));
-				f.setData(rs.getString("data_usuario"));
+				f.setData(rs.getTimestamp("data_usuario"));
 				f.setRua(rs.getString("rua_usuario"));
 				f.setNr(rs.getInt("nr_usuario"));
 				f.setCep(rs.getString("cep_usuario"));
@@ -257,7 +261,7 @@ public class UsuarioDAO {
 				g.setNome(rs.getString("nome_usuario"));
 				g.setEmail(rs.getString("email_usuario"));
 				g.setSenha(rs.getString("senha_usuario"));
-				g.setData(rs.getString("data_usuario"));
+				g.setData(rs.getTimestamp("data_usuario"));
 				g.setRua(rs.getString("rua_usuario"));
 				g.setNr(rs.getInt("nr_usuario"));
 				g.setCep(rs.getString("cep_usuario"));
@@ -288,7 +292,7 @@ public class UsuarioDAO {
 				g.setNome(rs.getString("nome_usuario"));
 				g.setEmail(rs.getString("email_usuario"));
 				g.setSenha(rs.getString("senha_usuario"));
-				g.setData(rs.getString("data_usuario"));
+				g.setData(rs.getTimestamp("data_usuario"));
 				g.setRua(rs.getString("rua_usuario"));
 				g.setNr(rs.getInt("nr_usuario"));
 				g.setCep(rs.getString("cep_usuario"));

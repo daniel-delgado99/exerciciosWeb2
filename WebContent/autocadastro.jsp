@@ -10,7 +10,7 @@
 <body>
 	<div class="flex-container">
 		<div class="form-cliente">
-			<form class="purple-box" action="UsuarioServlet?action=new" method="post" class="form-group">
+			<form class="purple-box" onsubmit="return validaForm()" action="UsuarioServlet?action=new" method="post" class="form-group">
 				<input type="hidden" name="tipoUsuario" value="1"/>
 				<h2 class="form-title">Novo usuário</h2>
 			
@@ -40,7 +40,7 @@
 						Rua <input type="text" name="rua" class="form-control" required/>
 					</div>
 					<div class="col-md-2">
-						Numero <input type="number" name="nr" class="form-control" required/>
+						Número <input type="number" name="nr" class="form-control" required/>
 					</div>
 					<div class="col-md-4">
 						CEP <input type="text" name="cep" id="cep" class="form-control" required/>
